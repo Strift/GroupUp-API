@@ -18,7 +18,7 @@ class CreateSessionsTable extends Migration
             $table->integer('schedule_id')->unsigned();
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->integer('game_id')->unsigned();
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+            $table->foreign('game_id')->references('id')->on('games');
             $table->timestamps();
         });
     }
