@@ -41,4 +41,14 @@ class User extends Authenticatable
     {
         $this->interests()->detach($game->id);
     }
+
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class);
+    }
+
+    public function setSchedule(Schedule $schedule)
+    {
+        $this->schedule()->save($schedule);
+    }
 }

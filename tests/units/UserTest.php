@@ -30,4 +30,10 @@ class UserTest extends TestCase
     	$user->removeInterest($game);
     	$this->missingFromDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
     }
+
+    public function testHasSchedule()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->assertNotNull($user->schedule);
+    }
 }
