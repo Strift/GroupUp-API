@@ -12,7 +12,7 @@ class SessionTest extends TestCase
     {
     	$user = factory(App\User::class)->create([]);
     	$game = factory(App\Game::class)->create([]);
-    	$session = factory(App\Session::class)->create(['schedule_id' => $user->schedule, 'game_id' => $game->id]);
+    	$session = factory(App\Session::class)->create(['schedule_id' => $user->schedule->id, 'game_id' => $game->id]);
         $this->assertNotNull($session->game);
     }
 }
