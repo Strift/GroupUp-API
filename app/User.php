@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         $this->schedule()->save($schedule);
     }
+
+    public function sessions()
+    {
+        return $this->hasManyThrough(Session::class, Schedule::class);
+    }
 }
