@@ -40,6 +40,7 @@ class UserTest extends TestCase
     public function testHasSessionsThroughSchedule()
     {
         $user = factory(App\User::class)->create([]);
+        $this->assertNotNull($user->sessions);
         $this->assertEquals($user->sessions, $user->schedule->sessions);
     }
 }
