@@ -28,6 +28,6 @@ class UserObserver
      */
     public function deleting(User $user)
     {
-        //
+        $user->schedule->delete();
     }
 }
