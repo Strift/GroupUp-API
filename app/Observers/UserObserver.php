@@ -16,9 +16,8 @@ class UserObserver
     public function created(User $user)
     {
         $schedule = new Schedule;
+        $schedule->user_id = $user->id;
         $schedule->save();
-        $user->setSchedule($schedule);
-        $user->save();
     }
 
     /**
