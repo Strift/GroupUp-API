@@ -12,6 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -28,3 +29,10 @@ $factory->define(App\Game::class, function (Faker\Generator $faker) {
 		'name' => $faker->name
 	];
 });
+
+$factory->define(App\Session::class, function (Faker\Generator $faker) {
+    return [
+        
+    ];
+});
+
