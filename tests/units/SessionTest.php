@@ -11,8 +11,7 @@ class SessionTest extends TestCase
     public function testHasGame()
     {
     	$game = factory(App\Game::class)->create([]);
-    	$session = factory(App\Session::class)->create([]);
-    	$session->setGame($game);
+    	$session = factory(App\Session::class)->create(['game_id' => $game->id]);
         $this->assertNotNull($session->game);
     }
 }
