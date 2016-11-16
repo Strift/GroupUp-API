@@ -26,4 +26,34 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function interests()
+    {
+        return $this->belongsToMany(Game::class);
+    }
+
+    public function addInterest(Game $game)
+    {
+        $this->interests()->attach($game->id);
+    }
+
+    public function removeInterest(Game $game)
+    {
+        $this->interests()->detach($game->id);
+    }
+
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class);
+    }
+
+    public function setSchedule(Schedule $schedule)
+    {
+        $this->schedule()->save($schedule);
+    }
+
+    public function sessions()
+    {
+        return $this->hasManyThrough(Session::class, Schedule::class);
+    }
 }
