@@ -24,7 +24,7 @@ class AdministrationSeederTest extends TestCase
 
     public function testAdminUserSeeded()
     {
-    	$this->seeInDatabase('users', ['name' => 'admin']);
+    	$this->seeInDatabase('users', ['email' => 'admin@group-up.com']);
     }
 
     public function testAdminUserHasAdminRole()

@@ -8,13 +8,20 @@ class UserAPITest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testDefault()
+    public function setUp()
     {
-    	$user = factory(App\User::class)->create([]);
-    	$this->actingAs($user, 'api')
-    		->get('api/user')
-    		->seeJsonStructure([
-    			"id", "name", "email"
-    			]);
+        parent::setUp();
+        $this->artisan('db:seed');
+    }
+
+    public function testAdminUserCanList()
+    {
+        $user = App\User::findByEmail('admin@group-up.com');
+        $this->actingAs($user, 'api')
+            ->get('api/users')
+            ->seeJsonStructure([
+                '*' => ['id', 'name', 'email']
+                ]);
+
     }
 }
