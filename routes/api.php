@@ -15,9 +15,6 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api'], function() {
 
-/*	Route::get('/users', function (Request $request) {
-	    return App\User::all()->toJson();
-	});*/
-	Route::get('/users', 'UsersController@list');
+	Route::get('/users', 'UsersController@list')->middleware('can:list,App\User');
 
 });

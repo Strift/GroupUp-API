@@ -22,6 +22,5 @@ class UserAPITest extends TestCase
             ->seeJsonStructure([
                 '*' => ['id', 'name', 'email']
                 ]);
-
     }
 }
