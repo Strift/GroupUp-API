@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/users', function (Request $request) {
-    return App\User::all()->toJson();
-})->middleware('auth:api');
+Route::group(['middleware' => 'auth:api'], function() {
+
+/*	Route::get('/users', function (Request $request) {
+	    return App\User::all()->toJson();
+	});*/
+	Route::get('/users', 'UsersController@list');
+
+});
