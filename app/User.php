@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Session::class, Schedule::class);
     }
+
+    public static function findByEmail($email)
+    {
+        return self::where('email', '=', $email)->first();
+    }
 }

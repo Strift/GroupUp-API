@@ -43,4 +43,13 @@ class UserTest extends TestCase
         $this->assertNotNull($user->sessions);
         $this->assertEquals($user->sessions, $user->schedule->sessions);
     }
+
+    public function testFindByEmail()
+    {
+        $createdUser = factory(App\User::class)->create([
+            'email' => 'test@email.com'
+            ]);
+        $foundUser = App\User::findByEmail('test@email.com');
+        $this->assertEquals($createdUser->id, $foundUser->id);
+    }
 }
