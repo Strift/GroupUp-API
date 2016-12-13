@@ -7,6 +7,12 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class UserTest extends TestCase
 {
 	use DatabaseMigrations;
+
+    public function testHasApiToken()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->assertNotNull($user->api_token);
+    }
     
     public function testHasInterests()
     {
