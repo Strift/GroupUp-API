@@ -22,6 +22,7 @@ class AdministrationSeeder extends Seeder
 
         $user = factory(App\User::class)->create([
         	'name' => 'admin', 
+            'password' => 'admin',
         	'email' => 'admin@group-up.com'
         	]);
 
