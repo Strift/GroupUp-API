@@ -17,8 +17,8 @@ class UserAPITest extends TestCase
     public function testAdminUserCanList()
     {
         $user = App\User::findByEmail('admin@group-up.com');
-        $this->actingAs($user, 'api')
-            ->get('api/users')
+        $this->actingAs($user)
+            ->get('api/users?api_token=' . $user->api_token)
             ->seeJsonStructure([
                 '*' => ['id', 'name', 'email']
                 ]);
