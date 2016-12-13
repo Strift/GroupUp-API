@@ -21,8 +21,8 @@ class AdministrationSeeder extends Seeder
 		$roleAdmin->save();
 
         $user = factory(App\User::class)->create([
-        	'name' => 'admin', 
-            'password' => 'admin',
+        	'name' => 'Admin', 
+            'password' => bcrypt('admin'),
         	'email' => 'admin@group-up.com'
         	]);
 
