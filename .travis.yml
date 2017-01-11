@@ -9,8 +9,6 @@ php:
 addons:
   sonarqube:
   branches:
-    - master
-    - develop
     - sonarqube
     
 before_script:
