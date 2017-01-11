@@ -1,15 +1,7 @@
-dist: trusty
-
 language: php
 
 php:
   - 7.0
-
-addons:
-  sonarqube:
-  branches:
-    - master
-    - maintenance
 
 before_script:
   - cp .env.travis .env
@@ -19,5 +11,3 @@ before_script:
 
 script:
   - vendor/bin/phpunit
-  - sonar-scanner
-  
