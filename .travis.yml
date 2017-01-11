@@ -6,6 +6,13 @@ language: php
 php:
   - 7.0
 
+addons:
+  sonarqube:
+  branches:
+    - master
+    - develop
+    - sonarqube
+    
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database group_up_test;'
@@ -14,3 +21,4 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - sonar-scanner
