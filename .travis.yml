@@ -18,5 +18,4 @@ before_script:
   - composer install --no-interaction
 
 script:
-  - vendor/bin/phpunit
   - sonar-scanner
