@@ -8,7 +8,7 @@ php:
 
 addons:
   sonarqube:
-  branches:
+    branches:
     - sonarqube
     
 before_script:
