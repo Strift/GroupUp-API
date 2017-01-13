@@ -19,7 +19,10 @@ class UserAPITest extends TestCase
         $user = App\User::findByEmail('admin@group-up.com');
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeJsonStructure([
-                '*' => ['id', 'name', 'email']
+                'errors',
+                'data' => [
+                    '*' => ['id', 'name', 'email']
+                    ]
                 ]);
     }
 

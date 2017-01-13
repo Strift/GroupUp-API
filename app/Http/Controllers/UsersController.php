@@ -13,11 +13,11 @@ class UsersController extends Controller
 	    try
         {
             $users = User::all();
-            return $users->toJson();
+            return response()->success($users->toArray());
         }
         catch (Exception $e)
         {
-            return response()->json("{}", 500);
+            return response()->error($e->getMessage(), 500);
         }
     }
 
