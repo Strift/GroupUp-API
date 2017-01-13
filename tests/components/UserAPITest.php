@@ -21,7 +21,7 @@ class UserAPITest extends TestCase
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    '*' => ['id', 'name', 'email']
+                    '*' => ['id', 'username', 'email']
                     ]
                 ]);
     }
@@ -40,7 +40,7 @@ class UserAPITest extends TestCase
         $this->get('api/users/' . $user->id . '?api_token=' . $adminUser->api_token)
             ->seeJsonStructure([
                 'errors',
-                'data' => ['id', 'name', 'email']
+                'data' => ['id', 'username', 'email']
                 ]);
     }
 
@@ -50,7 +50,7 @@ class UserAPITest extends TestCase
         $this->get('api/users/' . $user->id . '?api_token=' . $user->api_token)
             ->seeJsonStructure([
                 'errors',
-                'data' => ['id', 'name', 'email']
+                'data' => ['id', 'username', 'email']
                 ]);
     }
 
