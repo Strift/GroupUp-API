@@ -11,11 +11,11 @@ class UserAPITest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->artisan('db:seed');
     }
 
     public function testAdminUserCanList()
     {
-        $this->artisan('db:seed');
         $user = App\User::findByEmail('admin@group-up.com');
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeJsonStructure([
@@ -35,7 +35,6 @@ class UserAPITest extends TestCase
 
     public function testAdminUserCanView()
     {
-        $this->artisan('db:seed');
         $adminUser = App\User::findByEmail('admin@group-up.com');
         $user = factory(App\User::class)->create();
         $this->get('api/users/' . $user->id . '?api_token=' . $adminUser->api_token)

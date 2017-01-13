@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api', 'cors']], function() {
 
-	Route::get('/users', 'UsersController@list')->middleware('can:list,App\User');
-	Route::get('/users/{user}', 'UsersController@view')->middleware('can:view,user');
-	Route::delete('/users/{user}', 'UsersController@delete')->middleware('can:delete,user');
+	Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
+	Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
+	Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
 
 });
