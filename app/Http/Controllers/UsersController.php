@@ -20,4 +20,16 @@ class UsersController extends Controller
             return response()->json("{}", 500);
         }
     }
+
+    public function view(User $user)
+    {
+        try
+        {
+            return $user->toJson();
+        }
+        catch (Exception $e)
+        {
+            return response()->json("{}", 500);
+        }
+    }
 }

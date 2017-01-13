@@ -29,4 +29,28 @@ class UserAPITest extends TestCase
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeStatusCode(403);
     }
+
+    public function testAdminUserCanView()
+    {
+        $this->artisan('db:seed');
+        $adminUser = App\User::findByEmail('admin@group-up.com');
+        $user = factory(App\User::class)->create();
+        $this->get('api/users/' . $user->id . '?api_token=' . $adminUser->api_token)
+            ->seeJsonStructure(['id', 'name', 'email']);
+    }
+
+    public function testUserCanViewHimself()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->get('api/users/' . $user->id . '?api_token=' . $user->api_token)
+            ->seeJsonStructure(['id', 'name', 'email']);
+    }
+
+    public function testUserCannotViewOthers()
+    {
+        $user1 = factory(App\User::class)->create([]);
+        $user2 = factory(App\User::class)->create([]);
+        $this->get('api/users/' . $user1->id . '?api_token=' . $user2->api_token)
+            ->seeStatusCode(403);
+    }
 }

@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $otherUser)
     {
-        //
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }
 
     /**
