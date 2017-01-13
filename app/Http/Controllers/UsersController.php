@@ -25,11 +25,11 @@ class UsersController extends Controller
     {
         try
         {
-            return $user->toJson();
+            return response()->success($user->toArray());
         }
         catch (Exception $e)
         {
-            return response()->json("{}", 500);
+            return response()->error($e->getMessage(), 500);
         }
     }
 
@@ -38,11 +38,11 @@ class UsersController extends Controller
         try
         {
             $user->delete();
-            return response()->json("{}", 200);
+            return response()->success("User successfully deleted.");
         }
         catch (Exception $e)
         {
-            return response()->json("{}", 500);
+            return response()->error($e->getMessage(), 500);
         }
     }
 }

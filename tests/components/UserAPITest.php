@@ -39,14 +39,20 @@ class UserAPITest extends TestCase
         $adminUser = App\User::findByEmail('admin@group-up.com');
         $user = factory(App\User::class)->create();
         $this->get('api/users/' . $user->id . '?api_token=' . $adminUser->api_token)
-            ->seeJsonStructure(['id', 'name', 'email']);
+            ->seeJsonStructure([
+                'errors',
+                'data' => ['id', 'name', 'email']
+                ]);
     }
 
     public function testUserCanViewHimself()
     {
         $user = factory(App\User::class)->create([]);
         $this->get('api/users/' . $user->id . '?api_token=' . $user->api_token)
-            ->seeJsonStructure(['id', 'name', 'email']);
+            ->seeJsonStructure([
+                'errors',
+                'data' => ['id', 'name', 'email']
+                ]);
     }
 
     public function testUserCannotViewOthers()
