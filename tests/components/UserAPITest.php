@@ -11,15 +11,22 @@ class UserAPITest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->artisan('db:seed');
     }
 
     public function testAdminUserCanList()
     {
+        $this->artisan('db:seed');
         $user = App\User::findByEmail('admin@group-up.com');
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeJsonStructure([
                 '*' => ['id', 'name', 'email']
                 ]);
+    }
+
+    public function testStandardUserCannotList()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->get('api/users?api_token=' . $user->api_token)
+            ->seeStatusCode(403);
     }
 }
