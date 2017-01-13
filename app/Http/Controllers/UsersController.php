@@ -32,4 +32,17 @@ class UsersController extends Controller
             return response()->json("{}", 500);
         }
     }
+
+    public function delete(User $user)
+    {
+        try
+        {
+            $user->delete();
+            return response()->json("{}", 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json("{}", 500);
+        }
+    }
 }

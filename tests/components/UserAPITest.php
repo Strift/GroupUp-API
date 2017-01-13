@@ -53,4 +53,19 @@ class UserAPITest extends TestCase
         $this->get('api/users/' . $user1->id . '?api_token=' . $user2->api_token)
             ->seeStatusCode(403);
     }
+
+    public function testUserCanDeleteHimself()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->delete('api/users/' . $user->id . '?api_token=' . $user->api_token)
+            ->seeStatusCode(200);
+    }
+
+    public function testUserCannotDeleteOthers()
+    {
+        $user1 = factory(App\User::class)->create([]);
+        $user2 = factory(App\User::class)->create([]);
+        $this->delete('api/users/' . $user1->id . '?api_token=' . $user2->api_token)
+            ->seeStatusCode(403);
+    }
 }

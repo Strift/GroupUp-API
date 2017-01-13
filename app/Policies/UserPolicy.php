@@ -65,6 +65,6 @@ class UserPolicy
      */
     public function delete(User $user, User $otherUser)
     {
-        //
+        return ($user->id == $otherUser->id);
     }
 }
