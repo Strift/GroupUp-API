@@ -12,7 +12,7 @@ class RegisterAPIest extends TestCase
     {
         //#call($method, $uri, $parameters, $files, $server, $content, $changeHistory
         $this->json('POST', 
-                    '/api/register?username=Strift&email=strift@email.com&password=secret&password_confirmation=secret',
+                    '/api/register',
                     ['username' => 'Strift', 'email' => 'strift@email.com', 'password' => 'secret', 'password_confirmation' => 'secret'],
                     [],
                     ['HTTP_Accept' => 'application/json'])
