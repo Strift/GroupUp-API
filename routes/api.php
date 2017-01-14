@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+// Registration and Authentication routes
+Route::post('/register', 'Api\RegisterController@register');
+
+// Routes requiring authentication
 Route::group(['middleware' => ['auth:api', 'cors']], function() {
 
 	Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
