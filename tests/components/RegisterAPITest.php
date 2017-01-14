@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserAPITest extends TestCase
+class RegisterAPIest extends TestCase
 {
     use DatabaseMigrations;
 
