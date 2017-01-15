@@ -169,6 +169,7 @@ return [
 
         Kodeine\Acl\AclServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Spatie\Tail\TailServiceProvider::class,
 
         /*
          * Application Service Providers...
