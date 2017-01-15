@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 // Registration and Authentication routes
 Route::post('/register', 'Api\RegisterController@register');
+Route::post('/login', 'Api\LoginController@login');
 
 // Routes requiring authentication
 Route::group(['middleware' => ['auth:api', 'cors']], function() {
