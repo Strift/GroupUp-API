@@ -102,15 +102,5 @@ class LoginController extends Controller
     protected function username()
     {
     	return $this->username;
-    }  
-
-    protected function guard()
-    {
-        return Auth::guard();
-    }
-
-    protected function credentials(Request $request)
-    {
-        return $request->only($this->username(), 'password');
     }
 }
