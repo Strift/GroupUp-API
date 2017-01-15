@@ -2,23 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\User;
+
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends Controller
 {
-	use ThrottlesLogins;
+	use AuthenticatesUsers;
+
+	protected $username;
 
 	public function login(Request $request)
     {
     	try
     	{
+    		// Define the username used for credentials
+    		$this->username = $request->has('username') ? 'username' : 'email';
+
+    		// Validation
     		$validator = $this->validator($request->only(['email', 'password']));
     		if ($validator->fails())
     		{
@@ -93,7 +101,7 @@ class LoginController extends Controller
 
     protected function username()
     {
-    	return 'email';
+    	return $this->username;
     }  
 
     protected function guard()
