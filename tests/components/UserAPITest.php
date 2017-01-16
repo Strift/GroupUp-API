@@ -23,7 +23,8 @@ class UserAPITest extends TestCase
                 'data' => [
                     '*' => ['id', 'username', 'email']
                     ]
-                ]);
+                ])
+            ->seeStatusCode(200);
     }
 
     public function testStandardUserCannotList()
@@ -41,7 +42,8 @@ class UserAPITest extends TestCase
             ->seeJsonStructure([
                 'errors',
                 'data' => ['id', 'username', 'email']
-                ]);
+                ])
+            ->seeStatusCode(200);
     }
 
     public function testUserCanViewHimself()
@@ -51,7 +53,8 @@ class UserAPITest extends TestCase
             ->seeJsonStructure([
                 'errors',
                 'data' => ['id', 'username', 'email']
-                ]);
+                ])
+            ->seeStatusCode(200);
     }
 
     public function testUserCannotViewOthers()
