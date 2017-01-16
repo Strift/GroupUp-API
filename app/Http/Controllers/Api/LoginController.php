@@ -73,10 +73,7 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        return response()->error([
-                                'input' => $request->only($this->username()),
-                                $this->username() => Lang::get('auth.failed')
-                                ], 500);
+        return response()->error([$this->username() => Lang::get('auth.failed')], 500);
     } 
 
     protected function sendLockoutResponse(Request $request)
@@ -87,10 +84,7 @@ class LoginController extends Controller
 
         $message = Lang::get('auth.throttle', ['seconds' => $seconds]);
 
-        return response()->error([
-                                'input' => $request->only($this->username()),
-                                $this->username() => $message
-                                ], 429);
+        return response()->error([$this->username() => $message], 429);
     }
 
     protected function username()

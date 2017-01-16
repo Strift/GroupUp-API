@@ -46,9 +46,7 @@ class LoginAPITest extends TestCase
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    'input' => [
-                    	'email'
-                    	]
+                    'email'
                     ]
                 ])
             ->seeJson([
