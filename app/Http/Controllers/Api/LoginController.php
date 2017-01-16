@@ -27,7 +27,7 @@ class LoginController extends Controller
             $this->username = $request->has('username') ? 'username' : 'email';
 
             // Validation
-            $validator = $this->validator($request->only(['email', 'password']));
+            $validator = $this->validator($request->only([$this->username(), 'password']));
             if ($validator->fails()) {
                 return response()->error($validator->messages(), 422);
             }
@@ -60,7 +60,7 @@ class LoginController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'email' => 'required',
+            $this->username() => 'required',
             'password' => 'required',
         ]);
     }
