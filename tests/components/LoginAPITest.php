@@ -82,4 +82,17 @@ class LoginAPITest extends TestCase
                 ])
             ->seeStatusCode(422);
     }
+
+    public function testFailedLoginTooManyTimes()
+    {
+        for ($i = 0; $i < 100; $i++)
+        {
+            $this->json('POST', 
+                        '/api/login',
+                        ['email' => 'wrong@email.com', 'password' => 'wrongpassword'],
+                        [],
+                        ['HTTP_Accept' => 'application/json']);
+        }
+        $this->seeStatusCode(429);
+    }
 }
