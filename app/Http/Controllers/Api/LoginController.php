@@ -73,7 +73,7 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        return response()->error([$this->username() => Lang::get('auth.failed')], 500);
+        return response()->error([$this->username() => Lang::get('auth.failed')], 422);
     } 
 
     protected function sendLockoutResponse(Request $request)

@@ -75,12 +75,11 @@ class LoginAPITest extends TestCase
                     ['HTTP_Accept' => 'application/json'])
             ->seeJsonStructure([
                 'errors',
-                'data' => [
-                    'email'
-                    ]
+                'data'
                 ])
             ->seeJson([
                 'errors' => true
-                ]);
+                ])
+            ->seeStatusCode(422);
     }
 }
