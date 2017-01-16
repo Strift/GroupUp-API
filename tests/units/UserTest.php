@@ -58,4 +58,10 @@ class UserTest extends TestCase
         $foundUser = App\User::findByEmail('test@email.com');
         $this->assertEquals($createdUser->id, $foundUser->id);
     }
+
+    public function testHasFriends()
+    {
+        $user = factory(App\User::class)->create([]);
+        $this->assertNotNull($user->friends);
+    }
 }
