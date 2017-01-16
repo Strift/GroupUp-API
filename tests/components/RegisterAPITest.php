@@ -10,10 +10,14 @@ class RegisterAPIest extends TestCase
 
     public function testUserCanRegister()
     {
+        $username = 'Strift';
+        $email = 'strift@email.com';
+        $password = 'secret';
+
         //#call($method, $uri, $parameters, $files, $server, $content, $changeHistory
         $this->json('POST', 
                     '/api/register',
-                    ['username' => 'Strift', 'email' => 'strift@email.com', 'password' => 'secret', 'password_confirmation' => 'secret'],
+                    ['username' => $username, 'email' => $email, 'password' => $password, 'password_confirmation' => $password],
                     [],
                     ['HTTP_Accept' => 'application/json'])
             ->seeJsonStructure([
@@ -26,8 +30,9 @@ class RegisterAPIest extends TestCase
                 ])
             ->seeJson([
                 'errors' => false,
-                'username' => 'Strift',
-                'email' => 'strift@email.com'
-                ]);
+                'username' => $username,
+                'email' => $email
+                ])
+            ->seeStatusCode(200);
     }
 }
