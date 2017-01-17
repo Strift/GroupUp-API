@@ -64,4 +64,21 @@ class UserTest extends TestCase
         $user = factory(App\User::class)->create([]);
         $this->assertNotNull($user->friends);
     }
+
+    public function testAddFriend()
+    {
+        $user1 = factory(App\User::class)->create([]);
+        $user2 = factory(App\User::class)->create([]);
+        $user1->addFriend($user2);
+        $this->seeInDatabase('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
+    }
+
+    public function testRemoveFriend()
+    {
+        $user1 = factory(App\User::class)->create([]);
+        $user2 = factory(App\User::class)->create([]);
+        $user1->addFriend($user2);
+        $user1->removeFriend($user2);
+        $this->missingFromDatabase('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
+    }
 }

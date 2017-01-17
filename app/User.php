@@ -63,6 +63,16 @@ class User extends Authenticatable
         return $this->belongsTomany(User::class, 'friends', 'user1_id', 'user2_id');
     }
 
+    public function addFriend(User $user)
+    {
+        $this->friends()->attach($user->id);
+    }
+
+    public function removeFriend(User $user)
+    {
+        $this->friends()->detach($user->id);
+    }
+
     public static function findByEmail($email)
     {
         return self::where('email', '=', $email)->first();
