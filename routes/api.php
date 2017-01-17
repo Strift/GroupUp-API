@@ -13,15 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-// Registration and Authentication routes
-Route::post('/register', 'Api\RegisterController@register');
-Route::post('/login', 'Api\LoginController@login');
+Route::group(['middleware' => 'cors'], function() {
 
-// Routes requiring authentication
-Route::group(['middleware' => ['auth:api', 'cors']], function() {
+	// Registration and Authentication routes
+	Route::post('/register', 'Api\RegisterController@register');
+	Route::post('/login', 'Api\LoginController@login');
 
-	Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
-	Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
-	Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
+	// Routes requiring authentication
+	Route::group(['middleware' => 'auth:api'], function() {
+		// Users API
+		Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
+		Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
+		Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
+	});
 
 });
