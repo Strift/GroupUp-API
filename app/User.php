@@ -60,12 +60,12 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->belongsTomany(User::class, 'friends', 'user1_id', 'user2_id');
+        return $this->belongsTomany('App\User', 'friends', 'user1_id', 'user2_id');
     }
 
     public function addFriend(User $user)
     {
-        if ($this->hasFriend($user) == false) 
+        if ($this->hasFriend($user) == false)
         {
             $this->friends()->attach($user->id);
             $user->friends()->attach($this->id);
@@ -74,16 +74,17 @@ class User extends Authenticatable
 
     public function removeFriend(User $user)
     {
-        if ($this->hasFriend($user) == false)
-        {
-            $this->friends()->detach($user->id);
-            $user->friends()->detach($this->id);
-        }
+        $this->friends()->detach($user->id);
+        $this->load('friends');
+        $user->friends()->detach($this->id);
+        $user->load('friends');
     }
 
     public function hasFriend(User $user)
     {
-        return $this->friends->has($user->id);
+        return !$this->friends->filter(function($friend) use ($user) {
+            return $friend->id = $user->id;
+        })->isEmpty();
     }
 
     public static function findByEmail($email)
