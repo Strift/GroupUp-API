@@ -13,7 +13,7 @@ class UsersController extends Controller
     {
 	    try
         {
-            $users = User::all();
+            $users = User::with('friends')->get();
             return response()->success($users->toArray());
         }
         catch (Exception $e)

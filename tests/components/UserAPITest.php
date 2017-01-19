@@ -21,7 +21,7 @@ class UserAPITest extends TestCase
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    '*' => ['id', 'username', 'email']
+                    '*' => ['id', 'username', 'email', 'friends']
                     ]
                 ])
             ->seeStatusCode(200);

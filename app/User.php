@@ -66,11 +66,18 @@ class User extends Authenticatable
     public function addFriend(User $user)
     {
         $this->friends()->attach($user->id);
+        $user->addFriend($this);
     }
 
     public function removeFriend(User $user)
     {
         $this->friends()->detach($user->id);
+        $user->removeFriend($this);
+    }
+
+    public function hasFriend(User $user)
+    {
+        return $this->friends->has($user->id);
     }
 
     public static function findByEmail($email)
