@@ -65,14 +65,20 @@ class User extends Authenticatable
 
     public function addFriend(User $user)
     {
-        $this->friends()->attach($user->id);
-        $user->addFriend($this);
+        if ($this->hasFriend($user) == false) 
+        {
+            $this->friends()->attach($user->id);
+            $user->friends()->attach($this->id);
+        }
     }
 
     public function removeFriend(User $user)
     {
-        $this->friends()->detach($user->id);
-        $user->removeFriend($this);
+        if ($this->hasFriend($user) == false)
+        {
+            $this->friends()->detach($user->id);
+            $user->friends()->detach($this->id);
+        }
     }
 
     public function hasFriend(User $user)
