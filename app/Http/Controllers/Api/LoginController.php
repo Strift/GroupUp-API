@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
+
+use App\User;
 
 class LoginController extends Controller
 {
@@ -36,11 +36,13 @@ class LoginController extends Controller
             // the login attempts for this application. We'll key this by the username and
             // the IP address of the client making these requests into this application.
             if ($this->hasTooManyLoginAttempts($request)) {
+                Log::warning("Too many login attempts from " . $request->ip() . ".");
                 $this->fireLockoutEvent($request);
                 return $this->sendLockoutResponse($request);
             }
 
             if ($this->attemptLogin($request)) {
+                Log::info("User " . Auth::user()->id . " logged in.");
                 return $this->sendLoginResponse($request);
             }
 
