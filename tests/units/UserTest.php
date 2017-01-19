@@ -84,7 +84,7 @@ class UserTest extends TestCase
         $this->missingFromDatabase('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
     }
 
-    public function testHasFriend()
+    public function testHasFriendz()
     {
         $user1 = factory(App\User::class)->create([]);
         $user2 = factory(App\User::class)->create([]);

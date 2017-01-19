@@ -75,13 +75,12 @@ class User extends Authenticatable
     public function removeFriend(User $user)
     {
         $this->friends()->detach($user->id);
-        $this->load('friends');
         $user->friends()->detach($this->id);
-        $user->load('friends');
     }
 
     public function hasFriend(User $user)
     {
+        $this->load('friends');
         return !$this->friends->filter(function($friend) use ($user) {
             return $friend->id = $user->id;
         })->isEmpty();
