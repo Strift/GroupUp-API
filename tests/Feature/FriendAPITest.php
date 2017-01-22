@@ -44,10 +44,4 @@ class FriendAPITest extends TestCase
                 ])
 			->seeStatusCode(200);
     }
-
-    public function testCanAddFriend()
-    {
-        $user1 = factory(App\User::class)->create([]);
-        $user2 = factory(App\User::class)->create([]);
-    }
 }
