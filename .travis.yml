@@ -8,7 +8,7 @@ before_script:
   - mysql -e 'create database group_up_test;'
   - composer self-update
   - composer install --no-interaction
-  - php artisan key:generate
+  - php artisan key:generate --env=testing
 
 script:
   - vendor/bin/phpunit
