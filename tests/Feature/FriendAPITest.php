@@ -20,7 +20,8 @@ class FriendAPITest extends TestCase
         $user1 = factory(App\User::class)->create([]);
         $user2 = factory(App\User::class)->create([]);
         $user1->addFriend($user2);
-        $this->get('api/friends/' . $user1->id . '?api_token=' . $admin->api_token)
+        $this->json('GET',
+                    'api/friends/' . $user1->id . '?api_token=' . $admin->api_token)
             ->seeJsonStructure([
                 'errors',
                 'data' => [
@@ -34,12 +35,19 @@ class FriendAPITest extends TestCase
         $user1 = factory(App\User::class)->create([]);
         $user2 = factory(App\User::class)->create([]);
         $user1->addFriend($user2);
-        $this->get('api/friends/' . $user1->id . '?api_token=' . $user1->api_token)
+        $this->json('GET',
+                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token)
             ->seeJsonStructure([
                 'errors',
                 'data' => [
                 	'*' => ['id', 'username']]
                 ])
 			->seeStatusCode(200);
+    }
+
+    public function testCanAddFriend()
+    {
+        $user1 = factory(App\User::class)->create([]);
+        $user2 = factory(App\User::class)->create([]);
     }
 }
