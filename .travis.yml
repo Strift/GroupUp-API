@@ -4,7 +4,7 @@ php:
   - 7.0
 
 before_script:
-  - cp .env.travis .env
+  - cp .env.travis .env.testing
   - mysql -e 'create database group_up_test;'
   - composer self-update
   - composer install --no-interaction
