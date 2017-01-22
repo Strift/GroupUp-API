@@ -23,7 +23,7 @@ class RegisterController extends Controller
 			}
 			$user = $this->create($request->all());
 	        event(new Registered($user));
-	        return response()->success($user->toArray());
+	        return response()->success($user->makeVisible('email')->toArray());
 		}
 		catch (Exception $e)
 		{

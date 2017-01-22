@@ -20,12 +20,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be visible for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token', 'api_token'
+    protected $visible = [
+        'id', 'username', 'status'
     ];
 
     public function interests()

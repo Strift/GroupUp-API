@@ -14,7 +14,7 @@ class UsersController extends Controller
 	    try
         {
             $users = User::with('friends')->get();
-            return response()->success($users->toArray());
+            return response()->success($users->makeVisible(['email', 'friends'])->toArray());
         }
         catch (Exception $e)
         {
@@ -26,7 +26,7 @@ class UsersController extends Controller
     {
         try
         {
-            return response()->success($user->toArray());
+            return response()->success($user->makeVisible('email')->toArray());
         }
         catch (Exception $e)
         {

@@ -70,7 +70,7 @@ class LoginController extends Controller
     protected function sendLoginResponse(Request $request)
     {
         $this->clearLoginAttempts($request);
-        return response()->success($this->guard()->user()->makeVisible('api_token')->toArray());
+        return response()->success($this->guard()->user()->makeVisible(['email', 'api_token'])->toArray());
     }
 
     protected function sendFailedLoginResponse(Request $request)
