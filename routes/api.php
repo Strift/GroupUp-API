@@ -21,10 +21,15 @@ Route::group(['middleware' => 'cors'], function() {
 
 	// Routes requiring authentication
 	Route::group(['middleware' => 'auth:api'], function() {
+
 		// Users API
 		Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
 		Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
 		Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
+
+		// Friends API
+		Route::get('/friends/{user}', 'Api\FriendsController@view')->middleware('can:viewFriends,user');
+
 	});
 
 });
