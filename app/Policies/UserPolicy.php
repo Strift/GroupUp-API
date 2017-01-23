@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $otherUser)
     {
-        //
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }
 
     /**
@@ -65,6 +65,18 @@ class UserPolicy
      */
     public function delete(User $user, User $otherUser)
     {
-        //
+        return ($user->id == $otherUser->id);
+    }
+
+    /**
+     * Determine whether the user can view the user's friends.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $otherUser
+     * @return mixed
+     */
+    public function viewFriends(User $user, User $otherUser)
+    {
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }
 }

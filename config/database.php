@@ -66,6 +66,7 @@ return [
             'engine' => null,
         ],
 
+        // Travis-only database configuration
         'testing' => [
             'driver'    => 'mysql',
             'host'      => env('DB_TEST_HOST', 'localhost'),

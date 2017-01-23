@@ -16,16 +16,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'api_token'
+        'username', 'email', 'password', 'api_token'
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be visible for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
+    protected $visible = [
+        'id', 'username', 'status'
     ];
 
     public function interests()
@@ -56,6 +56,34 @@ class User extends Authenticatable
     public function sessions()
     {
         return $this->hasManyThrough(Session::class, Schedule::class);
+    }
+
+    public function friends()
+    {
+        return $this->belongsTomany('App\User', 'friends', 'user1_id', 'user2_id');
+    }
+
+    public function addFriend(User $user)
+    {
+        if ($this->hasFriend($user) == false)
+        {
+            $this->friends()->attach($user->id);
+            $user->friends()->attach($this->id);
+        }
+    }
+
+    public function removeFriend(User $user)
+    {
+        $this->friends()->detach($user->id);
+        $user->friends()->detach($this->id);
+    }
+
+    public function hasFriend(User $user)
+    {
+        $this->load('friends');
+        return !$this->friends->filter(function($friend) use ($user) {
+            return $friend->id = $user->id;
+        })->isEmpty();
     }
 
     public static function findByEmail($email)

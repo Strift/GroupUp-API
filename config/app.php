@@ -168,6 +168,8 @@ return [
          */
 
         Kodeine\Acl\AclServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+        Spatie\Tail\TailServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -177,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ResponseMacroServiceProvider::class,
 
     ],
 

@@ -12,10 +12,11 @@ addons:
     - sonarqube
     
 before_script:
-  - cp .env.travis .env
+  - cp .env.travis .env.testing
   - mysql -e 'create database group_up_test;'
   - composer self-update
   - composer install --no-interaction
+  - php artisan key:generate --env=testing
 
 script:
   - vendor/bin/phpunit
