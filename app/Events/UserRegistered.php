@@ -15,7 +15,7 @@ class UserRegistered
 {
     use InteractsWithSockets, SerializesModels;
 
-    protected $user;
+    public $user;
 
     /**
      * Create a new event instance.
