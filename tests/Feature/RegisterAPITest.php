@@ -12,7 +12,6 @@ class RegisterAPIest extends TestCase
 
     public function testUserCanRegister()
     {
-        Mail::fake();
         $this->expectsEvents(App\Events\UserRegistered::class);
         // JSON request
         $username = 'Strift';
