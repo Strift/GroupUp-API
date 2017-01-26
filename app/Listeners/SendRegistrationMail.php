@@ -6,6 +6,7 @@ use App\Events\UserRegistered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegistration;
 
 class SendRegistrationMail
@@ -28,6 +29,6 @@ class SendRegistrationMail
      */
     public function handle(UserRegistered $event)
     {
-        Mail::to($event->user)->send(new UserRegistration($user));
+        Mail::to($event->user)->send(new UserRegistration($event->user));
     }
 }
