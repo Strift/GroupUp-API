@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -22,7 +21,7 @@ class RegisterController extends Controller
 				return response()->error($validator->messages(), 422);
 			}
 			$user = $this->create($request->all());
-	        event(new Registered($user));
+	        event(new UserRegistered($user));
 	        return response()->success($user->makeVisible('email')->toArray());
 		}
 		catch (Exception $e)

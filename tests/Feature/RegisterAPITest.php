@@ -10,10 +10,11 @@ class RegisterAPIest extends TestCase
 
     public function testUserCanRegister()
     {
+        $this->expectsEvents(App\Events\UserRegistered::class);
+
         $username = 'Strift';
         $email = 'strift@email.com';
         $password = 'secret';
-
         //#call($method, $uri, $parameters, $files, $server, $content, $changeHistory
         $this->json('POST', 
                     '/api/register',
