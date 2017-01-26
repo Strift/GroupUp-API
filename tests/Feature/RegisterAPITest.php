@@ -4,14 +4,17 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Illuminate\Support\Facades\Mail;
+
 class RegisterAPIest extends TestCase
 {
     use DatabaseMigrations;
 
     public function testUserCanRegister()
     {
+        Mail::fake();
         $this->expectsEvents(App\Events\UserRegistered::class);
-
+        // JSON request
         $username = 'Strift';
         $email = 'strift@email.com';
         $password = 'secret';
