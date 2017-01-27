@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\BrowserKitTest as TestCase;
-
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 
 use App\User;
 use App\Events\UserRegistered;
@@ -24,7 +25,7 @@ class UserRegisteredEventTest extends TestCase
     	$user = factory(User::class)->create([]);
         event(new UserRegistered($user));
         // Assertion
-        Event::assertFired(UserRegistered::class, function ($e) use ($user) {
+        Event::assertDispatched(UserRegistered::class, function ($e) use ($user) {
             return $e->user->id === $user->id;
         });
     }
