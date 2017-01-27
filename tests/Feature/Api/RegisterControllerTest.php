@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api;
 
-use Tests\BrowserKitTest as TestCase;
-
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -29,19 +28,13 @@ class RegisterAPIest extends TestCase
                     ['username' => $username, 'email' => $email, 'password' => $password, 'password_confirmation' => $password],
                     [],
                     ['HTTP_Accept' => 'application/json'])
-            ->seeJsonStructure([
-                'errors',
-                'data' => [
-                    'id', 
-                    'username', 
-                    'email'
-                    ]
-                ])
-            ->seeJson([
+            ->assertJson([
                 'errors' => false,
-                'username' => $username,
-                'email' => $email
+                'data' => [
+	                'username' => $username,
+	                'email' => $email
+                	]
                 ])
-            ->seeStatusCode(200);
+            ->assertStatus(200);
     }
 }
