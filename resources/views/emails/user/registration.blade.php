@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+# Hello {{ $username }}
 
-The body of your message.
+Thank you for your registration on Group Up. Activate your account by clicking on the button below and start playing with your friends!
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => $url])
+Activate my account
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+See you in game,<br>
+The {{ config('app.name') }} team
 @endcomponent
