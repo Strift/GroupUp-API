@@ -1,22 +1,27 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AdministrationSeederTest extends TestCase
+use App\User;
+
+class AdminSeederTest extends TestCase
 {
     use DatabaseMigrations;
 
     public function setUp()
     {
-    	parent::setUp();
-    	$this->artisan('db:seed');
+        parent::setUp();
+        $this->artisan('db:seed');
     }
 
     public function testAdministratorRoleSeeded()
     {
-        $this->seeInDatabase('roles', [
+        $this->assertDatabaseHas('roles', [
             'name' => 'Administrator',
             'slug' => 'administrator',
         ]);
@@ -24,11 +29,11 @@ class AdministrationSeederTest extends TestCase
 
     public function testAdminUserSeeded()
     {
-    	$this->seeInDatabase('users', ['email' => 'admin@group-up.com']);
+        $this->assertDatabaseHas('users', ['email' => 'admin@group-up.com']);
     }
 
     public function testAdminUserHasAdminRole()
     {
-        $this->assertTrue(App\User::first()->hasRole('administrator'));
+        $this->assertTrue(User::first()->hasRole('administrator'));
     }
 }

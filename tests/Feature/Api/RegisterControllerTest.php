@@ -1,10 +1,15 @@
 <?php
 
+namespace Tests\Feature\Api;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Illuminate\Support\Facades\Mail;
+
+use App\Events\UserRegistered;
 
 class RegisterAPIest extends TestCase
 {
@@ -12,7 +17,7 @@ class RegisterAPIest extends TestCase
 
     public function testUserCanRegister()
     {
-        $this->expectsEvents(App\Events\UserRegistered::class);
+        $this->expectsEvents(UserRegistered::class);
         // JSON request
         $username = 'Strift';
         $email = 'strift@email.com';
@@ -23,19 +28,13 @@ class RegisterAPIest extends TestCase
                     ['username' => $username, 'email' => $email, 'password' => $password, 'password_confirmation' => $password],
                     [],
                     ['HTTP_Accept' => 'application/json'])
-            ->seeJsonStructure([
-                'errors',
-                'data' => [
-                    'id', 
-                    'username', 
-                    'email'
-                    ]
-                ])
-            ->seeJson([
+            ->assertJson([
                 'errors' => false,
-                'username' => $username,
-                'email' => $email
+                'data' => [
+	                'username' => $username,
+	                'email' => $email
+                	]
                 ])
-            ->seeStatusCode(200);
+            ->assertStatus(200);
     }
 }

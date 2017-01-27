@@ -1,11 +1,16 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 
+use App\User;
 use App\Events\UserRegistered;
-
 use App\Mail\UserRegistration;
 
 class UserRegisteredEventTest extends TestCase
@@ -17,10 +22,10 @@ class UserRegisteredEventTest extends TestCase
     	// Faking events
     	Event::fake();
     	// Firing event
-    	$user = factory(App\User::class)->create([]);
+    	$user = factory(User::class)->create([]);
         event(new UserRegistered($user));
         // Assertion
-        Event::assertFired(UserRegistered::class, function ($e) use ($user) {
+        Event::assertDispatched(UserRegistered::class, function ($e) use ($user) {
             return $e->user->id === $user->id;
         });
     }
@@ -30,11 +35,11 @@ class UserRegisteredEventTest extends TestCase
     	// Faking mails
     	Mail::fake();
     	// Firing event
-    	$user = factory(App\User::class)->create([]);
+    	$user = factory(User::class)->create([]);
         event(new UserRegistered($user));
     	// Mail assertion
     	Mail::assertSent(UserRegistration::class, function ($mail) use ($user) {
-            return $mail->user->id === $user->id;
+            return ($mail->hasTo($user) and $mail->user->id === $user->id);
         });
     }
 }
