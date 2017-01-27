@@ -8,11 +8,11 @@ class Session extends Model
 {
     public function game()
     {
-    	return $this->belongsTo(Game::class);
+        return $this->belongsTo(Game::class);
     }
 
     public function setGame(Game $game)
     {
-    	$this->game()->associate($game);
+        $this->game()->associate($game);
     }
 }

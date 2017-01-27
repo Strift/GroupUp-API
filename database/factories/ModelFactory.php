@@ -26,9 +26,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Game::class, function (Faker\Generator $faker) {
-	return [
-		'name' => $faker->name
-	];
+    return [
+        'name' => $faker->name
+    ];
 });
 
 $factory->define(App\Session::class, function (Faker\Generator $faker) {
@@ -36,4 +36,3 @@ $factory->define(App\Session::class, function (Faker\Generator $faker) {
         
     ];
 });
-

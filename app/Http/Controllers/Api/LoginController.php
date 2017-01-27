@@ -21,8 +21,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        try
-        {
+        try {
             // Define the username used for credentials
             $this->username = $request->has('username') ? 'username' : 'email';
 
@@ -52,9 +51,7 @@ class LoginController extends Controller
             $this->incrementLoginAttempts($request);
 
             return $this->sendFailedLoginResponse($request);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->error($e->getMessage(), 500);
         }
     }
@@ -76,7 +73,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         return response()->error([$this->username() => Lang::get('auth.failed')], 422);
-    } 
+    }
 
     protected function sendLockoutResponse(Request $request)
     {

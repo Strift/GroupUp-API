@@ -65,8 +65,7 @@ class User extends Authenticatable
 
     public function addFriend(User $user)
     {
-        if ($this->hasFriend($user) == false)
-        {
+        if ($this->hasFriend($user) == false) {
             $this->friends()->attach($user->id);
             $user->friends()->attach($this->id);
         }
@@ -81,7 +80,7 @@ class User extends Authenticatable
     public function hasFriend(User $user)
     {
         $this->load('friends');
-        return !$this->friends->filter(function($friend) use ($user) {
+        return !$this->friends->filter(function ($friend) use ($user) {
             return $friend->id = $user->id;
         })->isEmpty();
     }
