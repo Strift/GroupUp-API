@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 
 use App\User;
 use App\Events\UserRegistered;
@@ -17,9 +18,8 @@ class UserRegisteredEventTest extends TestCase
 {
 	use DatabaseMigrations;
 
-    public function testIsRegistered()
+    public function testEventIsDispatched()
     {
-    	// Faking events
     	Event::fake();
     	// Firing event
     	$user = factory(User::class)->create([]);
@@ -30,9 +30,8 @@ class UserRegisteredEventTest extends TestCase
         });
     }
 
-    public function testSendRegistrationMail()
+    public function testRegistrationMailIsSent()
     {
-    	// Faking mails
     	Mail::fake();
     	// Firing event
     	$user = factory(User::class)->create([]);

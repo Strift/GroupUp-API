@@ -32,6 +32,7 @@ class UserRegistration extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->from('example@mail.com')
+                    ->markdown('emails.user.registration');
     }
 }
