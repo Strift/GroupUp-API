@@ -20,7 +20,7 @@ class UserRegisteredEventTest extends TestCase
         $user = factory(App\User::class)->create([]);
         event(new UserRegistered($user));
         // Assertion
-        Event::assertFired(UserRegistered::class, function ($e) use ($user) {
+        Event::assertDispatched(UserRegistered::class, function ($e) use ($user) {
             return $e->user->id === $user->id;
         });
     }
