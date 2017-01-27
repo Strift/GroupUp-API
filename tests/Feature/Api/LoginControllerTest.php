@@ -71,6 +71,7 @@ class LoginAPITest extends TestCase
     public function testFailedLoginTooManyTimes()
     {
         $response = null;
+        // Since Laravel 5.4, it does not work 
         for ($i = 0; $i < 60; $i++)
         {
         	$response = $this->json('POST', '/api/login', ['email' => 'wrong@email.com', 'password' => 'wrongpassword']);
