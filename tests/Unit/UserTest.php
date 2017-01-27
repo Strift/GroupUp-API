@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase
 {
-	use DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function testHasApiToken()
     {
@@ -16,25 +16,25 @@ class UserTest extends TestCase
     
     public function testHasInterestsRelationship()
     {
-    	$user = factory(App\User::class)->create([]);
+        $user = factory(App\User::class)->create([]);
         $this->assertNotNull($user->interests);
     }
 
     public function testAddInterest()
     {
-    	$user = factory(App\User::class)->create([]);
-    	$game = factory(App\Game::class)->create([]);
-    	$user->addInterest($game);
-    	$this->seeInDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
+        $user = factory(App\User::class)->create([]);
+        $game = factory(App\Game::class)->create([]);
+        $user->addInterest($game);
+        $this->seeInDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
     }
 
     public function testRemoveInterest()
     {
-    	$user = factory(App\User::class)->create([]);
-    	$game = factory(App\Game::class)->create([]);
-    	$user->addInterest($game);
-    	$user->removeInterest($game);
-    	$this->missingFromDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
+        $user = factory(App\User::class)->create([]);
+        $game = factory(App\Game::class)->create([]);
+        $user->addInterest($game);
+        $user->removeInterest($game);
+        $this->missingFromDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
     }
 
     public function testHasScheduleRelationship()

@@ -13,23 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => 'cors'], function() {
+Route::group(['middleware' => 'cors'], function () {
 
-	// Registration and Authentication routes
-	Route::post('/register', 'Api\RegisterController@register');
-	Route::post('/login', 'Api\LoginController@login');
+    // Registration and Authentication routes
+    Route::post('/register', 'Api\RegisterController@register');
+    Route::post('/login', 'Api\LoginController@login');
 
-	// Routes requiring authentication
-	Route::group(['middleware' => 'auth:api'], function() {
+    // Routes requiring authentication
+    Route::group(['middleware' => 'auth:api'], function () {
 
-		// Users API
-		Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
-		Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
-		Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
+        // Users API
+        Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
+        Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
+        Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
 
-		// Friends API
-		Route::get('/friends/{user}', 'Api\FriendsController@view')->middleware('can:viewFriends,user');
-
-	});
-
+        // Friends API
+        Route::get('/friends/{user}', 'Api\FriendsController@view')->middleware('can:viewFriends,user');
+    });
 });

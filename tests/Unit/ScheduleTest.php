@@ -6,14 +6,14 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ScheduleTest extends TestCase
 {
-	use DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function testIsDeletedOnUserDeletion()
     {
-    	$user = factory(App\User::class)->create([]);
-    	$schedule_id = $user->schedule->id;
-    	$this->seeInDatabase('schedules', ["id" => $schedule_id]);
-    	$user->delete();
-    	$this->missingFromDatabase('schedules', ['id' => $schedule_id]);
+        $user = factory(App\User::class)->create([]);
+        $schedule_id = $user->schedule->id;
+        $this->seeInDatabase('schedules', ["id" => $schedule_id]);
+        $user->delete();
+        $this->missingFromDatabase('schedules', ['id' => $schedule_id]);
     }
 }

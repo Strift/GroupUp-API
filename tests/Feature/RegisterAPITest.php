@@ -18,16 +18,18 @@ class RegisterAPIest extends TestCase
         $email = 'strift@email.com';
         $password = 'secret';
         //#call($method, $uri, $parameters, $files, $server, $content, $changeHistory
-        $this->json('POST', 
-                    '/api/register',
-                    ['username' => $username, 'email' => $email, 'password' => $password, 'password_confirmation' => $password],
-                    [],
-                    ['HTTP_Accept' => 'application/json'])
+        $this->json(
+            'POST',
+            '/api/register',
+            ['username' => $username, 'email' => $email, 'password' => $password, 'password_confirmation' => $password],
+            [],
+            ['HTTP_Accept' => 'application/json']
+        )
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    'id', 
-                    'username', 
+                    'id',
+                    'username',
                     'email'
                     ]
                 ])

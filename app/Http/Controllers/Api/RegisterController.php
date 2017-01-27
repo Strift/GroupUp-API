@@ -11,26 +11,22 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-	public function register(Request $request)
-	{
-		try 
-		{
-			$validator = $this->validator($request->all());
-			if ($validator->fails())
-			{
-				return response()->error($validator->messages(), 422);
-			}
-			$user = $this->create($request->all());
-	        event(new UserRegistered($user));
-	        return response()->success($user->makeVisible('email')->toArray());
-		}
-		catch (Exception $e)
-		{
+    public function register(Request $request)
+    {
+        try {
+            $validator = $this->validator($request->all());
+            if ($validator->fails()) {
+                return response()->error($validator->messages(), 422);
+            }
+            $user = $this->create($request->all());
+            event(new UserRegistered($user));
+            return response()->success($user->makeVisible('email')->toArray());
+        } catch (Exception $e) {
             return response()->error($e->getMessage(), 500);
-		}
-	}
+        }
+    }
 
-	protected function validator(array $data)
+    protected function validator(array $data)
     {
         return Validator::make($data, [
             'username' => 'required|max:255|unique:users',
@@ -39,7 +35,7 @@ class RegisterController extends Controller
         ]);
     }
 
-	protected function create(array $data)
+    protected function create(array $data)
     {
         return User::create([
             'username' => $data['username'],

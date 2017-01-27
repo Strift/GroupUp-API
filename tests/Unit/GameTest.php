@@ -10,7 +10,7 @@ class GameTest extends TestCase
 
     public function testHasInterestedUsers()
     {
-    	$game = factory(App\Game::class)->create([]);
+        $game = factory(App\Game::class)->create([]);
         $this->assertNotNull($game->interestedUsers);
     }
 }

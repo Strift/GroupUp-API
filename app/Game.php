@@ -8,6 +8,6 @@ class Game extends Model
 {
     public function interestedUsers()
     {
-    	return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 }

@@ -6,23 +6,25 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class LoginAPITest extends TestCase
 {
-	use DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function testLoginWithEmail()
     {
-    	$password = 'secret';
+        $password = 'secret';
         $user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
 
-        $this->json('POST', 
-                    '/api/login',
-                    ['email' => $user->email, 'password' => $password],
-                    [],
-                    ['HTTP_Accept' => 'application/json'])
+        $this->json(
+            'POST',
+            '/api/login',
+            ['email' => $user->email, 'password' => $password],
+            [],
+            ['HTTP_Accept' => 'application/json']
+        )
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    'id', 
-                    'username', 
+                    'id',
+                    'username',
                     'email',
                     'api_token'
                     ]
@@ -41,16 +43,18 @@ class LoginAPITest extends TestCase
         $password = 'secret';
         $user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
 
-        $this->json('POST', 
-                    '/api/login',
-                    ['username' => $user->username, 'password' => $password],
-                    [],
-                    ['HTTP_Accept' => 'application/json'])
+        $this->json(
+            'POST',
+            '/api/login',
+            ['username' => $user->username, 'password' => $password],
+            [],
+            ['HTTP_Accept' => 'application/json']
+        )
             ->seeJsonStructure([
                 'errors',
                 'data' => [
-                    'id', 
-                    'username', 
+                    'id',
+                    'username',
                     'email',
                     'api_token'
                     ]
@@ -66,13 +70,15 @@ class LoginAPITest extends TestCase
 
     public function testLoginWithWrongCredentials()
     {
-    	$user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt('goodpassword')]);
+        $user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt('goodpassword')]);
 
-        $this->json('POST', 
-                    '/api/login',
-                    ['email' => $user->email, 'password' => 'wrongpassword'],
-                    [],
-                    ['HTTP_Accept' => 'application/json'])
+        $this->json(
+            'POST',
+            '/api/login',
+            ['email' => $user->email, 'password' => 'wrongpassword'],
+            [],
+            ['HTTP_Accept' => 'application/json']
+        )
             ->seeJsonStructure([
                 'errors',
                 'data'
@@ -85,13 +91,14 @@ class LoginAPITest extends TestCase
 
     public function testFailedLoginTooManyTimes()
     {
-        for ($i = 0; $i < 100; $i++)
-        {
-            $this->json('POST', 
-                        '/api/login',
-                        ['email' => 'wrong@email.com', 'password' => 'wrongpassword'],
-                        [],
-                        ['HTTP_Accept' => 'application/json']);
+        for ($i = 0; $i < 100; $i++) {
+            $this->json(
+                'POST',
+                '/api/login',
+                ['email' => 'wrong@email.com', 'password' => 'wrongpassword'],
+                [],
+                ['HTTP_Accept' => 'application/json']
+            );
         }
         $this->seeStatusCode(429);
     }

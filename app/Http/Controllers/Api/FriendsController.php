@@ -11,13 +11,10 @@ class FriendsController extends Controller
 {
     public function view(User $user)
     {
-        try
-        {
-        	$user = User::with('friends')->find($user->id);
+        try {
+            $user = User::with('friends')->find($user->id);
             return response()->success($user->friends->toArray());
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->error($e->getMessage(), 500);
         }
     }

@@ -10,8 +10,8 @@ class AdministrationSeederTest extends TestCase
 
     public function setUp()
     {
-    	parent::setUp();
-    	$this->artisan('db:seed');
+        parent::setUp();
+        $this->artisan('db:seed');
     }
 
     public function testAdministratorRoleSeeded()
@@ -24,7 +24,7 @@ class AdministrationSeederTest extends TestCase
 
     public function testAdminUserSeeded()
     {
-    	$this->seeInDatabase('users', ['email' => 'admin@group-up.com']);
+        $this->seeInDatabase('users', ['email' => 'admin@group-up.com']);
     }
 
     public function testAdminUserHasAdminRole()
