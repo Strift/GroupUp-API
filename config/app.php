@@ -170,6 +170,7 @@ return [
         Kodeine\Acl\AclServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Spatie\Tail\TailServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
