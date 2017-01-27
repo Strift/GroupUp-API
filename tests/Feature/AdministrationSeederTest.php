@@ -1,8 +1,13 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\BrowserKitTest as TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\User;
 
 class AdministrationSeederTest extends TestCase
 {
@@ -10,8 +15,8 @@ class AdministrationSeederTest extends TestCase
 
     public function setUp()
     {
-    	parent::setUp();
-    	$this->artisan('db:seed');
+        parent::setUp();
+        $this->artisan('db:seed');
     }
 
     public function testAdministratorRoleSeeded()
@@ -29,6 +34,6 @@ class AdministrationSeederTest extends TestCase
 
     public function testAdminUserHasAdminRole()
     {
-        $this->assertTrue(App\User::first()->hasRole('administrator'));
+        $this->assertTrue(User::first()->hasRole('administrator'));
     }
 }

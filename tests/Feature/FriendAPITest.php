@@ -1,14 +1,19 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\BrowserKitTest as TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\User;
 
 class FriendAPITest extends TestCase
 {
 	use DatabaseMigrations;
 
-	public function setUp()
+    public function setUp()
     {
         parent::setUp();
         $this->artisan('db:seed');
@@ -16,9 +21,9 @@ class FriendAPITest extends TestCase
 
     public function testAdminCanViewAnyoneFriends()
     {
-    	$admin = App\User::findByEmail('admin@group-up.com');
-        $user1 = factory(App\User::class)->create([]);
-        $user2 = factory(App\User::class)->create([]);
+    	$admin = User::findByEmail('admin@group-up.com');
+        $user1 = factory(User::class)->create([]);
+        $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $this->json('GET',
                     'api/friends/' . $user1->id . '?api_token=' . $admin->api_token)
@@ -32,8 +37,8 @@ class FriendAPITest extends TestCase
 
     public function testUserCanViewHisFriends()
     {
-        $user1 = factory(App\User::class)->create([]);
-        $user2 = factory(App\User::class)->create([]);
+        $user1 = factory(User::class)->create([]);
+        $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $this->json('GET',
                     'api/friends/' . $user1->id . '?api_token=' . $user1->api_token)

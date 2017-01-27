@@ -1,8 +1,14 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\BrowserKitTest as TestCase;
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\User;
 
 class UserAPITest extends TestCase
 {
@@ -16,7 +22,7 @@ class UserAPITest extends TestCase
 
     public function testAdminUserCanList()
     {
-        $user = App\User::findByEmail('admin@group-up.com');
+        $user = User::findByEmail('admin@group-up.com');
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeJsonStructure([
                 'errors',
@@ -29,15 +35,15 @@ class UserAPITest extends TestCase
 
     public function testStandardUserCannotList()
     {
-        $user = factory(App\User::class)->create([]);
+        $user = factory(User::class)->create([]);
         $this->get('api/users?api_token=' . $user->api_token)
             ->seeStatusCode(403);
     }
 
     public function testAdminUserCanView()
     {
-        $adminUser = App\User::findByEmail('admin@group-up.com');
-        $user = factory(App\User::class)->create();
+        $adminUser = User::findByEmail('admin@group-up.com');
+        $user = factory(User::class)->create();
         $this->get('api/users/' . $user->id . '?api_token=' . $adminUser->api_token)
             ->seeJsonStructure([
                 'errors',
@@ -48,7 +54,7 @@ class UserAPITest extends TestCase
 
     public function testUserCanViewHimself()
     {
-        $user = factory(App\User::class)->create([]);
+        $user = factory(User::class)->create([]);
         $this->get('api/users/' . $user->id . '?api_token=' . $user->api_token)
             ->seeJsonStructure([
                 'errors',
@@ -59,23 +65,23 @@ class UserAPITest extends TestCase
 
     public function testUserCannotViewOthers()
     {
-        $user1 = factory(App\User::class)->create([]);
-        $user2 = factory(App\User::class)->create([]);
+        $user1 = factory(User::class)->create([]);
+        $user2 = factory(User::class)->create([]);
         $this->get('api/users/' . $user1->id . '?api_token=' . $user2->api_token)
             ->seeStatusCode(403);
     }
 
     public function testUserCanDeleteHimself()
     {
-        $user = factory(App\User::class)->create([]);
+        $user = factory(User::class)->create([]);
         $this->delete('api/users/' . $user->id . '?api_token=' . $user->api_token)
             ->seeStatusCode(200);
     }
 
     public function testUserCannotDeleteOthers()
     {
-        $user1 = factory(App\User::class)->create([]);
-        $user2 = factory(App\User::class)->create([]);
+        $user1 = factory(User::class)->create([]);
+        $user2 = factory(User::class)->create([]);
         $this->delete('api/users/' . $user1->id . '?api_token=' . $user2->api_token)
             ->seeStatusCode(403);
     }

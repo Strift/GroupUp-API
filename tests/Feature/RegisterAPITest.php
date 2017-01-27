@@ -1,10 +1,16 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\BrowserKitTest as TestCase;
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Illuminate\Support\Facades\Mail;
+
+use App\Events\UserRegistered;
 
 class RegisterAPIest extends TestCase
 {
@@ -12,7 +18,7 @@ class RegisterAPIest extends TestCase
 
     public function testUserCanRegister()
     {
-        $this->expectsEvents(App\Events\UserRegistered::class);
+        $this->expectsEvents(UserRegistered::class);
         // JSON request
         $username = 'Strift';
         $email = 'strift@email.com';

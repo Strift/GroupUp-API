@@ -1,8 +1,14 @@
 <?php
 
+namespace Tests\Feature;
+
+use Tests\BrowserKitTest as TestCase;
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+use App\User;
 
 class LoginAPITest extends TestCase
 {
@@ -11,7 +17,7 @@ class LoginAPITest extends TestCase
     public function testLoginWithEmail()
     {
     	$password = 'secret';
-        $user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
+        $user = factory(User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
 
         $this->json('POST', 
                     '/api/login',
@@ -39,7 +45,7 @@ class LoginAPITest extends TestCase
     public function testLoginWithUsername()
     {
         $password = 'secret';
-        $user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
+        $user = factory(User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt($password)]);
 
         $this->json('POST', 
                     '/api/login',
@@ -66,7 +72,7 @@ class LoginAPITest extends TestCase
 
     public function testLoginWithWrongCredentials()
     {
-    	$user = factory(App\User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt('goodpassword')]);
+    	$user = factory(User::class)->create(['username' => 'Strift', 'email' => 'strift@email.com', 'password' => bcrypt('goodpassword')]);
 
         $this->json('POST', 
                     '/api/login',
