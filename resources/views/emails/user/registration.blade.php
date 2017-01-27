@@ -1,5 +1,5 @@
 @component('mail::message')
-# Hello {{ $username }}
+# Hello {{ $username }},
 
 Thank you for your registration on Group Up. Activate your account by clicking on the button below and start playing with your friends!
 
