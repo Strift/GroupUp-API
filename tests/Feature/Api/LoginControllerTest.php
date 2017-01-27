@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api;
 
-use Tests\BrowserKitTest as TestCase;
-
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\TestResponse;
 
 use App\User;
 
@@ -22,24 +22,16 @@ class LoginAPITest extends TestCase
         $this->json('POST', 
                     '/api/login',
                     ['email' => $user->email, 'password' => $password],
-                    [],
                     ['HTTP_Accept' => 'application/json'])
-            ->seeJsonStructure([
-                'errors',
-                'data' => [
-                    'id', 
-                    'username', 
-                    'email',
-                    'api_token'
-                    ]
-                ])
-            ->seeJson([
+            ->assertJson([
                 'errors' => false,
-                'username' => $user->username,
-                'email' => $user->email,
-                'api_token' => $user->api_token
+                'data' => [
+	                'username' => $user->username,
+	                'email' => $user->email,
+	                'api_token' => $user->api_token
+	                ]
                 ])
-            ->seeStatusCode(200);
+            ->assertStatus(200);
     }
 
     public function testLoginWithUsername()
@@ -50,24 +42,16 @@ class LoginAPITest extends TestCase
         $this->json('POST', 
                     '/api/login',
                     ['username' => $user->username, 'password' => $password],
-                    [],
                     ['HTTP_Accept' => 'application/json'])
-            ->seeJsonStructure([
-                'errors',
-                'data' => [
-                    'id', 
-                    'username', 
-                    'email',
-                    'api_token'
-                    ]
-                ])
-            ->seeJson([
+            ->assertJson([
                 'errors' => false,
-                'username' => $user->username,
-                'email' => $user->email,
-                'api_token' => $user->api_token
+                'data' => [
+	                'username' => $user->username,
+	                'email' => $user->email,
+	                'api_token' => $user->api_token
+	                ]
                 ])
-            ->seeStatusCode(200);
+            ->assertStatus(200);
     }
 
     public function testLoginWithWrongCredentials()
@@ -77,28 +61,23 @@ class LoginAPITest extends TestCase
         $this->json('POST', 
                     '/api/login',
                     ['email' => $user->email, 'password' => 'wrongpassword'],
-                    [],
                     ['HTTP_Accept' => 'application/json'])
-            ->seeJsonStructure([
-                'errors',
-                'data'
-                ])
-            ->seeJson([
+            ->assertJson([
                 'errors' => true
                 ])
-            ->seeStatusCode(422);
+            ->assertStatus(422);
     }
 
     public function testFailedLoginTooManyTimes()
     {
-        for ($i = 0; $i < 100; $i++)
+        $response = null;
+        for ($i = 0; $i < 60; $i++)
         {
-            $this->json('POST', 
-                        '/api/login',
-                        ['email' => 'wrong@email.com', 'password' => 'wrongpassword'],
-                        [],
-                        ['HTTP_Accept' => 'application/json']);
+        	$response = $this->json('POST', '/api/login', ['email' => 'wrong@email.com', 'password' => 'wrongpassword']);
         }
-        $this->seeStatusCode(429);
+        $response->assertJson([
+                'errors' => true
+                ])
+        	->assertStatus(429);
     }
 }
