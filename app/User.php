@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->belongsTomany('App\User', 'friends', 'user1_id', 'user2_id');
+        return $this->belongsTomany(\App\User::class, 'friends', 'user1_id', 'user2_id');
     }
 
     public function addFriend(User $user)
