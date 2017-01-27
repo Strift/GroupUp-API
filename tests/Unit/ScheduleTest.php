@@ -2,8 +2,7 @@
 
 namespace Tests\Unit;
 
-use Tests\BrowserKitTest as TestCase;
-
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -18,8 +17,8 @@ class ScheduleTest extends TestCase
     {
     	$user = factory(User::class)->create([]);
     	$schedule_id = $user->schedule->id;
-    	$this->seeInDatabase('schedules', ["id" => $schedule_id]);
+    	$this->assertDatabaseHas('schedules', ["id" => $schedule_id]);
     	$user->delete();
-    	$this->missingFromDatabase('schedules', ['id' => $schedule_id]);
+    	$this->assertDatabaseMissing('schedules', ['id' => $schedule_id]);
     }
 }
