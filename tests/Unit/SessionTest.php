@@ -31,6 +31,6 @@ class SessionTest extends TestCase
     	$session_id = $session->id;
     	$this->assertDatabaseHas('sessions', ['id' => $session_id]);
     	$user->schedule->delete();
-    	$this->missingFromDatabase('sessions', ['id' => $session_id]);
+    	$this->assertDatabaseMissing('sessions', ['id' => $session_id]);
     }
 }
