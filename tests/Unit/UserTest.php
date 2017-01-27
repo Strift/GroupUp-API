@@ -2,8 +2,7 @@
 
 namespace Tests\Unit;
 
-use Tests\BrowserKitTest as TestCase;
-
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -32,7 +31,7 @@ class UserTest extends TestCase
     	$user = factory(User::class)->create([]);
     	$game = factory(Game::class)->create([]);
     	$user->addInterest($game);
-    	$this->seeInDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
+    	$this->assertDatabaseHas('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
     }
 
     public function testRemoveInterest()
@@ -41,7 +40,7 @@ class UserTest extends TestCase
     	$game = factory(Game::class)->create([]);
     	$user->addInterest($game);
     	$user->removeInterest($game);
-    	$this->missingFromDatabase('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
+    	$this->assertDatabaseMissing('game_user', ["game_id" => $game->id, "user_id" => $user->id]);
     }
 
     public function testHasScheduleRelationship()
@@ -77,8 +76,8 @@ class UserTest extends TestCase
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
-        $this->seeInDatabase('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
-        $this->seeInDatabase('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
+        $this->assertDatabaseHas('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
+        $this->assertDatabaseHas('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
     }
 
     public function testRemoveFriend()
@@ -87,8 +86,8 @@ class UserTest extends TestCase
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $user1->removeFriend($user2);
-        $this->missingFromDatabase('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
-        $this->missingFromDatabase('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
+        $this->assertDatabaseMissing('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
+        $this->assertDatabaseMissing('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
     }
 
     public function testHasFriendz()
