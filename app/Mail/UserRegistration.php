@@ -32,8 +32,7 @@ class UserRegistration extends Mailable
      */
     public function build()
     {
-        return $this->from('no-reply@group-up.com', 'Group Up')
-                    ->subject('Activate your Group Up account')
+        return $this->subject('Activate your Group Up account')
                     ->markdown('emails.user.registration')
                     ->with('username', $this->user->username)
                     ->with('url', '');
