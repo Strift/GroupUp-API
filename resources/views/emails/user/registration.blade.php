@@ -1,7 +1,7 @@
 @component('mail::message')
 # Hello {{ $username }},
 
-Thank you for registering on Group Up. Activate your account by clicking on the button below and start playing with your friends!
+Thank you for registering on Group Up. Activate your account by clicking on the button below, and start playing with your friends!
 
 @component('mail::button', ['url' => $url])
 Activate my account
