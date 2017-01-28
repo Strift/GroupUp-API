@@ -90,7 +90,7 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
     }
 
-    public function testHasFriendz()
+    public function testHasFriend()
     {
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
@@ -100,5 +100,12 @@ class UserTest extends TestCase
         $user1->removeFriend($user2);
         $this->assertFalse($user1->hasFriend($user2));
         $this->assertFalse($user2->hasFriend($user1));
+    }
+
+    public function testCanBeActivated()
+    {
+        $user = factory(User::class)->create([]);
+        $user->activate();
+        $this->assertTrue($user->isActivated());
     }
 }

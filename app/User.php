@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Kodeine\Acl\Traits\HasRole;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'api_token'
+        'username', 'email', 'password', 'api_token', 'activated_at'
     ];
 
     /**
@@ -27,6 +28,11 @@ class User extends Authenticatable
     protected $visible = [
         'id', 'username', 'status'
     ];
+
+    public static function findByEmail($email)
+    {
+        return self::where('email', '=', $email)->first();
+    }
 
     public function interests()
     {
@@ -86,8 +92,14 @@ class User extends Authenticatable
         })->isEmpty();
     }
 
-    public static function findByEmail($email)
+    public function activate()
     {
-        return self::where('email', '=', $email)->first();
+        $this->activated_at = Carbon::now();
+        $this->save();
+    }
+
+    public function isActivated()
+    {
+        return ($this->activated_at != null);
     }
 }
