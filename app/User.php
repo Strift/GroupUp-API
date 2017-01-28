@@ -34,6 +34,11 @@ class User extends Authenticatable
         return self::where('email', '=', $email)->first();
     }
 
+    public static function findByVerificationToken($token)
+    {
+        return self::where('verification_token', '=', $token)->first();
+    }
+
     public function interests()
     {
         return $this->belongsToMany(Game::class);
