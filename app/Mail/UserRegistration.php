@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\User;
 
-class UserRegistration extends Mailable
+class UserRegistration extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
