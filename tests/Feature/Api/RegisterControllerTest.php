@@ -9,13 +9,14 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Illuminate\Support\Facades\Mail;
 
+use App\User;
 use App\Events\UserRegistered;
 
 class RegisterAPIest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testUserCanRegister()
+    public function testCanRegister()
     {
         $this->expectsEvents(UserRegistered::class);
         // JSON request
