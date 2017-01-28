@@ -35,6 +35,6 @@ class UserRegistration extends Mailable
         return $this->subject('Activate your Group Up account')
                     ->markdown('emails.user.registration')
                     ->with('username', $this->user->username)
-                    ->with('url', '');
+                    ->with('url', url('/') . '/verification?token=' . $this->user->verification_token);
     }
 }
