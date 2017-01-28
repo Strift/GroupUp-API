@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'api_token', 'activated_at'
+        'username', 'email', 'password', 'api_token', 'verified_at'
     ];
 
     /**
@@ -92,14 +92,14 @@ class User extends Authenticatable
         })->isEmpty();
     }
 
-    public function activate()
+    public function verifyAccount()
     {
-        $this->activated_at = Carbon::now();
+        $this->verified_at = Carbon::now();
         $this->save();
     }
 
-    public function isActivated()
+    public function isVerifiedAccount()
     {
-        return ($this->activated_at != null);
+        return ($this->verified_at != null);
     }
 }

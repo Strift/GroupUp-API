@@ -102,10 +102,10 @@ class UserTest extends TestCase
         $this->assertFalse($user2->hasFriend($user1));
     }
 
-    public function testCanBeActivated()
+    public function testCanBeVerified()
     {
         $user = factory(User::class)->create([]);
-        $user->activate();
-        $this->assertTrue($user->isActivated());
+        $user->verifyAccount();
+        $this->assertTrue($user->isVerifiedAccount());
     }
 }
