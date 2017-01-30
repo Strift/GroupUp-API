@@ -25,7 +25,7 @@ sudo apt-get install php7.0-curl
 sudo apt-get install php7.0-mysql
 ```
 
-- Install MySQL. Leave the default settings and press Enter when needed.
+- Install MySQL. If you want the default settings, just press Return when needed.
 
 ```
 sudo apt-get mysql-server
