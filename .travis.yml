@@ -8,7 +8,7 @@ before_script:
   - touch storage/app/database.sqlite
   - composer self-update
   - composer install --no-interaction
-  - php artisan key:generate --env=testing
+  - php artisan key:generate
 
 script:
   - vendor/bin/phpunit
