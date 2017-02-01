@@ -74,33 +74,53 @@ class User extends Authenticatable
         return $this->belongsTomany('App\User', 'friends', 'user1_id', 'user2_id');
     }
 
+    /**
+     * Add a friend to the user, return true in case of success
+     *
+     * @param  \App\User  $user
+     * @return boolean
+     */
     public function addFriend(User $user)
     {
-        if ($this->hasFriend($user) == false)
+        if (/*$this->id == $user->id or */$this->hasFriend($user) == false)
         {
             $this->friends()->attach($user->id);
             $user->friends()->attach($this->id);
+        $this->load('friends');
+            return true;
         }
+        return false;
     }
 
     public function removeFriend(User $user)
     {
-        $this->friends()->detach($user->id);
-        $user->friends()->detach($this->id);
+        // Pretty sure this could be improved by checking the return value of detach
+        if ($this->hasFriend($user)) 
+        {
+            $this->friends()->detach($user->id);
+            $user->friends()->detach($this->id);
+            return true;
+        }
+        return false;
     }
 
     public function hasFriend(User $user)
     {
         $this->load('friends');
         return !$this->friends->filter(function($friend) use ($user) {
-            return $friend->id = $user->id;
+            return $friend->id == $user->id;
         })->isEmpty();
     }
 
     public function verifyAccount()
     {
-        $this->verified_at = Carbon::now();
-        $this->save();
+        if ($this->verified_at == null) 
+        {
+            $this->verified_at = Carbon::now();
+            $this->save();
+            return true;
+        }
+        return false;
     }
 
     public function isVerifiedAccount()
