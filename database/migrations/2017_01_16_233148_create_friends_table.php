@@ -19,7 +19,7 @@ class CreateFriendsTable extends Migration
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('favorite');
+            $table->boolean('favorite')->default(false);
             $table->timestamps();
         });
     }
