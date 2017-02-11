@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Friend extends Model
 {
+    protected $visible = [
+        'username', 'status', 'favorite'
+    ];
+
+    protected $appends = [
+        'username', 'status', 'favorite'
+    ];
+
     public function owner()
     {
     	return $this->belongsTo(User::class, 'owner_id');
@@ -24,5 +32,10 @@ class Friend extends Model
     public function getStatusAttribute()
     {
     	return $this->user->status;
+    }
+
+    public function getFavoriteAttribute($favorite)
+    {
+        return (bool) $favorite;
     }
 }
