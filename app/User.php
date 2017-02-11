@@ -104,7 +104,7 @@ class User extends Authenticatable
         // Pretty sure this could be improved by checking the return value of detach
         if ($this->hasFriend($user)) 
         {
-            $this->friends()->delete($user->id);
+            $this->friends()->where('user_id', $user->id)->delete();
             return true;
         }
         return false;
