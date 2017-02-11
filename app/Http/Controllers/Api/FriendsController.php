@@ -27,7 +27,7 @@ class FriendsController extends Controller
     {
         try
         {
-            $validator = Validator::make($request->only(['username']), ['username' => 'required']);
+            $validator = Validator::make($request->only(['username']), ['username' => 'required|exists:users,username']);
             if ($validator->fails())
             {
                 return response()->error($validator->messages(), 422);
@@ -46,12 +46,12 @@ class FriendsController extends Controller
     {
         try
         {
-            $validator = Validator::make($request->only(['id']), ['id' => 'required']);
+            $validator = Validator::make($request->only(['username']), ['username' => 'required|exists:users,username']);
             if ($validator->fails())
             {
                 return response()->error($validator->messages(), 422);
             }
-            $friend = User::find($request->id);
+            $friend = User::findByUsername($request->username);
             $user->removeFriend($friend);
             return response()->success($friend);
         }

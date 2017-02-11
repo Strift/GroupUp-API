@@ -52,7 +52,7 @@ class FriendAPITest extends TestCase
 			->assertStatus(200);
     }
 
-    public function testUserCanAddFriend()
+    public function testUserCanAdd()
     {
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
@@ -68,12 +68,25 @@ class FriendAPITest extends TestCase
             ->assertStatus(200);
     }
 
-    public function testUserCanRemoveFriend()
+    public function testUserCannotAddWithWrongUsername()
+    {
+        $user1 = factory(User::class)->create([]);
+        $this->json('POST',
+                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+                    ['username' => 'wrongusername'])
+            ->assertJson([
+                'errors' => true,
+                'data' => []
+                ])
+            ->assertStatus(422);
+    }
+
+    public function testUserCanRemove()
     {
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
-        $this->delete('api/friends/' . $user1->username . '?api_token=' . $user1->api_token,
+        $this->delete('api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
                     ['username' => $user2->username])
             ->assertJson([
                 'errors' => false,
@@ -82,5 +95,17 @@ class FriendAPITest extends TestCase
                     ]
                 ])
             ->assertStatus(200);
+    }
+
+    public function testUserCannotRemoveWithWrongUsername()
+    {
+        $user1 = factory(User::class)->create([]);
+        $this->delete('api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+                    ['username' => 'wrongusername'])
+            ->assertJson([
+                'errors' => true,
+                'data' => []
+                ])
+            ->assertStatus(422);
     }
 }
