@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->belongsTomany('App\User', 'friends', 'user1_id', 'user2_id');
+        return $this->hasMany(Friend::class, 'owner_id');
     }
 
     /**
@@ -89,9 +89,11 @@ class User extends Authenticatable
     {
         if (/*$this->id == $user->id or */$this->hasFriend($user) == false)
         {
-            $this->friends()->attach($user->id);
-            $user->friends()->attach($this->id);
-        $this->load('friends');
+            $friend = new Friend;
+            $friend->owner()->associate($this);
+            $friend->user()->associate($user);
+            $this->friends()->save($friend);
+            $this->load('friends');
             return true;
         }
         return false;
@@ -102,8 +104,7 @@ class User extends Authenticatable
         // Pretty sure this could be improved by checking the return value of detach
         if ($this->hasFriend($user)) 
         {
-            $this->friends()->detach($user->id);
-            $user->friends()->detach($this->id);
+            $this->friends()->delete($user->id);
             return true;
         }
         return false;
@@ -113,7 +114,7 @@ class User extends Authenticatable
     {
         $this->load('friends');
         return !$this->friends->filter(function($friend) use ($user) {
-            return $friend->id == $user->id;
+            return $friend->user->id == $user->id;
         })->isEmpty();
     }
 

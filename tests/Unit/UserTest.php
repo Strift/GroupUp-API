@@ -73,27 +73,21 @@ class UserTest extends TestCase
 
     public function testAddFriend()
     {
-        $user1 = factory(User::class)->create([]);
-        $user2 = factory(User::class)->create([]);
-        $user3 = factory(User::class)->create([]);
-        $this->assertTrue($user1->addFriend($user2));
-        $this->assertFalse($user1->addFriend($user2));
-        $this->assertTrue($user1->addFriend($user3));
-        $this->assertDatabaseHas('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
-        $this->assertDatabaseHas('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
-        $this->assertDatabaseHas('friends', ['user1_id' => $user1->id, 'user2_id' => $user3->id]);
-        $this->assertDatabaseHas('friends', ['user2_id' => $user3->id, 'user1_id' => $user1->id]);
+        $owner = factory(User::class)->create([]);
+        $user = factory(User::class)->create([]);
+        $this->assertTrue($owner->addFriend($user));
+        $this->assertFalse($owner->addFriend($user));
+        $this->assertDatabaseHas('friends', ['owner_id' => $owner->id, 'user_id' => $user->id]);
     }
 
     public function testRemoveFriend()
     {
-        $user1 = factory(User::class)->create([]);
-        $user2 = factory(User::class)->create([]);
-        $user1->addFriend($user2);
-        $this->assertTrue($user1->removeFriend($user2));
-        $this->assertFalse($user1->removeFriend($user2));
-        $this->assertDatabaseMissing('friends', ['user1_id' => $user1->id, 'user2_id' => $user2->id]);
-        $this->assertDatabaseMissing('friends', ['user2_id' => $user2->id, 'user1_id' => $user1->id]);
+        $owner = factory(User::class)->create([]);
+        $user = factory(User::class)->create([]);
+        $owner->addFriend($user);
+        $this->assertTrue($owner->removeFriend($user));
+        $this->assertFalse($owner->removeFriend($user));
+        $this->assertDatabaseMissing('friends', ['owner_id' => $owner->id, 'user_id' => $user->id]);
     }
 
     public function testHasFriend()
@@ -102,10 +96,8 @@ class UserTest extends TestCase
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $this->assertTrue($user1->hasFriend($user2));
-        $this->assertTrue($user2->hasFriend($user1));
         $user1->removeFriend($user2);
         $this->assertFalse($user1->hasFriend($user2));
-        $this->assertFalse($user2->hasFriend($user1));
     }
 
     public function testCanBeVerified()
