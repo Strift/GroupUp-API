@@ -30,6 +30,7 @@ Route::group(['middleware' => 'cors'], function() {
 		// Friends API
 		Route::get('/friends/{user}', 'Api\FriendsController@list')->middleware('can:listFriends,user');
 		Route::post('/friends/{user}', 'Api\FriendsController@add')->middleware('can:addFriend,user');
+		Route::delete('/friends/{user}', 'Api\FriendsController@remove')->middleware('can:removeFriend,user');
 
 	});
 

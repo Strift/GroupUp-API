@@ -41,4 +41,23 @@ class FriendsController extends Controller
             return response()->error($e->getMessage(), 500);
         }
     }
+
+    public function remove(Request $request, User $user)
+    {
+        try
+        {
+            $validator = Validator::make($request->only(['id']), ['id' => 'required']);
+            if ($validator->fails())
+            {
+                return response()->error($validator->messages(), 422);
+            }
+            $friend = User::find($request->id);
+            $user->removeFriend($friend);
+            return response()->success($friend);
+        }
+        catch (Exception $e)
+        {
+            return response()->error($e->getMessage(), 500);
+        }
+    }
 }

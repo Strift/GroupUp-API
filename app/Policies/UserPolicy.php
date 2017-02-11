@@ -91,4 +91,16 @@ class UserPolicy
     {
         return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }
+
+    /**
+     * Determine whether the user can remove a friend.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $otherUser
+     * @return mixed
+     */
+    public function removeFriend(User $user, User $otherUser)
+    {
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
+    }
 }
