@@ -62,7 +62,6 @@ class FriendAPITest extends TestCase
             ->assertJson([
                 'errors' => false,
                 'data' => [
-                    'id' => $user2->id,
                     'username' => $user2->username
                     ]
                 ])
@@ -74,12 +73,11 @@ class FriendAPITest extends TestCase
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
-        $this->delete('api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
-                    ['id' => $user2->id])
+        $this->delete('api/friends/' . $user1->username . '?api_token=' . $user1->api_token,
+                    ['username' => $user2->username])
             ->assertJson([
                 'errors' => false,
                 'data' => [
-                    'id' => $user2->id,
                     'username' => $user2->username
                     ]
                 ])
