@@ -10,7 +10,7 @@ use App\User;
 
 class FriendsController extends Controller
 {
-    public function view(User $user)
+    public function list(User $user)
     {
         try
         {
