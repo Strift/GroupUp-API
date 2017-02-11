@@ -75,7 +75,19 @@ class UserPolicy
      * @param  \App\User  $otherUser
      * @return mixed
      */
-    public function viewFriends(User $user, User $otherUser)
+    public function listFriends(User $user, User $otherUser)
+    {
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
+    }
+
+    /**
+     * Determine whether the user can add a user as friend.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $otherUser
+     * @return mixed
+     */
+    public function addFriend(User $user, User $otherUser)
     {
         return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }

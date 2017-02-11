@@ -51,4 +51,21 @@ class FriendAPITest extends TestCase
                 ])
 			->assertStatus(200);
     }
+
+    public function testUserCanAddFriend()
+    {
+        $user1 = factory(User::class)->create([]);
+        $user2 = factory(User::class)->create([]);
+        $this->json('POST',
+                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+                    ['username' => $user2->username])
+            ->assertJson([
+                'errors' => false,
+                'data' => [
+                    'id' => $user2->id,
+                    'username' => $user2->username
+                    ]
+                ])
+            ->assertStatus(200);
+    }
 }
