@@ -18,7 +18,15 @@ class FriendTest extends TestCase
     	$owner = factory(User::class)->create([]);
     	$user = factory(User::class)->create([]);
     	$friend = factory(Friend::class)->create(['owner_id' => $owner->id, 'user_id' => $user->id]);
-        $this->assertEquals($friend->owner->id, $owner->id);
-        $this->assertEquals($friend->user->id, $user->id);
+        $this->assertDatabaseHas('friends', ['owner_id' => $owner->id, 'user_id' => $user->id]);
+    }
+
+    public function testHasUserVisibleProperties()
+    {
+    	$owner = factory(User::class)->create([]);
+    	$user = factory(User::class)->create([]);
+    	$friend = factory(Friend::class)->create(['owner_id' => $owner->id, 'user_id' => $user->id]);
+    	$this->assertEquals($friend->username, $user->username);
+    	$this->assertEquals($friend->status, $user->status);
     }
 }

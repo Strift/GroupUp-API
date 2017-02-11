@@ -15,4 +15,14 @@ class Friend extends Model
     {
     	return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function getUsernameAttribute()
+    {
+    	return $this->user->username;
+    }
+
+    public function getStatusAttribute()
+    {
+    	return $this->user->status;
+    }
 }
