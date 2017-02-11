@@ -38,3 +38,9 @@ $factory->define(App\Session::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Friend::class, function (Faker\Generator $faker) {
+    return [
+        'favorite' => false,
+    ];
+});
+
