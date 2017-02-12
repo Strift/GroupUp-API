@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
+use App\Friend;
 
 class FriendsController extends Controller
 {
@@ -14,8 +15,8 @@ class FriendsController extends Controller
     {
         try
         {
-        	$user = User::with('friends')->find($user->id);
-            return response()->success($user->friends->toArray());
+        	$friends = Friend::where('owner_id')->get();
+            return response()->success($friends->toArray());
         }
         catch (Exception $e)
         {
