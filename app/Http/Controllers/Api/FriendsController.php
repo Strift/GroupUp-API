@@ -15,7 +15,7 @@ class FriendsController extends Controller
     {
         try
         {
-        	$friends = Friend::where('owner_id')->get();
+        	$friends = Friend::where('owner_id', $owner->id)->get();
             return response()->success($friends->toArray());
         }
         catch (Exception $e)
@@ -33,8 +33,10 @@ class FriendsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
-            $friend = User::findByUsername($request->username);
-            $owner->addFriend($friend);
+            $friend = Friend::create([
+                    'owner_id' => $owner->id,
+                    'user_id' => User::findByUsername($request->username)->id
+                ]);
             return response()->success($friend);
         }
         catch (Exception $e)
