@@ -90,9 +90,6 @@ class FriendAPITest extends TestCase
                     ['username' => $user2->username])
             ->assertJson([
                 'errors' => false,
-                'data' => [
-                    'username' => $user2->username
-                    ]
                 ])
             ->assertStatus(200);
     }
