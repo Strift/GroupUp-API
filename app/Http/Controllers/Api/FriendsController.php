@@ -84,6 +84,8 @@ class FriendsController extends Controller
             $friend = Friend::where('owner_id', $owner->id)
                 ->where('user_id', User::findByUsername($request->username)->id)
                 ->first();
+            $friend->favorite = (boolean) $request->favorite;
+            $friend->save();
             return response()->success($friend->toArray());
         }
         catch (Exception $e)

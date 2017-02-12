@@ -106,7 +106,7 @@ class FriendAPITest extends TestCase
             ->assertStatus(422);
     }
 
-    /*public function testUserCanFavorite()
+    public function testUserCanFavorite()
     {
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
@@ -122,5 +122,5 @@ class FriendAPITest extends TestCase
                     ]
                 ])
             ->assertStatus(200);
-    }*/
+    }
 }

@@ -14,7 +14,7 @@ class Friend extends Model
     ];
 
     protected $appends = [
-        'username', 'status', 'favorite'
+        'username', 'status'
     ];
 
     public function owner()
@@ -35,13 +35,5 @@ class Friend extends Model
     public function getStatusAttribute()
     {
     	return $this->user->status;
-    }
-
-    public function getFavoriteAttribute($favorite)
-    {
-        if ($favorite) {
-            return true;
-        }
-        return false;
     }
 }
