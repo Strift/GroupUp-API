@@ -54,10 +54,36 @@ class FriendsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
-            User::where('owner_id', $owner->id)
+            Friend::where('owner_id', $owner->id)
                 ->where('user_id', User::findByUsername($request->username)->id)
                 ->delete();
             return response()->success("Friend successfully deleted.");
+        }
+        catch (Exception $e)
+        {
+            return response()->error($e->getMessage(), 500);
+        }
+    }
+
+    public function favorite(Request $request, User $owner)
+    {
+        try
+        {
+            $validator = Validator::make($request->only(['username', 'favorite']), 
+                [
+                    'username' => 'required|exists:users,username',
+                    'favorite' => 'required|boolean'
+                ]);
+            if ($validator->fails())
+            {
+                return response()->error($validator->messages(), 422);
+            }
+            $friend = Friend::where('owner_id', $owner->id)
+                ->where('user_id', User::findByUsername($request->username)->id)
+                ->first();
+            $friend->favorite = $request->favorite;
+            $friend->save();
+            return response()->success($friend->toArray());
         }
         catch (Exception $e)
         {

@@ -31,6 +31,7 @@ Route::group(['middleware' => 'cors'], function() {
 		Route::get('/users/{owner}/friends', 'Api\FriendsController@list')->middleware('can:listFriends,owner');
 		Route::post('/users/{owner}/friends', 'Api\FriendsController@add')->middleware('can:addFriend,owner');
 		Route::delete('/users/{owner}/friends', 'Api\FriendsController@remove')->middleware('can:removeFriend,owner');
+		Route::put('/users/{owner}/friends', 'Api\FriendsController@favorite')->middleware('can:favorite,owner');
 
 	});
 
