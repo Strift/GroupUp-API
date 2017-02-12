@@ -11,7 +11,7 @@ use App\Friend;
 
 class FriendsController extends Controller
 {
-    public function list(User $user)
+    public function list(User $owner)
     {
         try
         {
@@ -24,7 +24,7 @@ class FriendsController extends Controller
         }
     }
 
-    public function add(Request $request, User $user)
+    public function add(Request $request, User $owner)
     {
         try
         {
@@ -34,7 +34,7 @@ class FriendsController extends Controller
                 return response()->error($validator->messages(), 422);
             }
             $friend = User::findByUsername($request->username);
-            $user->addFriend($friend);
+            $owner->addFriend($friend);
             return response()->success($friend);
         }
         catch (Exception $e)
@@ -43,7 +43,7 @@ class FriendsController extends Controller
         }
     }
 
-    public function remove(Request $request, User $user)
+    public function remove(Request $request, User $owner)
     {
         try
         {
@@ -53,7 +53,7 @@ class FriendsController extends Controller
                 return response()->error($validator->messages(), 422);
             }
             $friend = User::findByUsername($request->username);
-            $user->removeFriend($friend);
+            $owner->removeFriend($friend);
             return response()->success($friend);
         }
         catch (Exception $e)
