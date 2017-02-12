@@ -54,9 +54,10 @@ class FriendsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
-            $friend = User::findByUsername($request->username);
-            $owner->removeFriend($friend);
-            return response()->success($friend);
+            User::where('owner_id', $owner->id)
+                ->where('user_id', User::findByUsername($request->username)->id)
+                ->delete();
+            return response()->success("Friend successfully deleted.");
         }
         catch (Exception $e)
         {
