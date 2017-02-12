@@ -92,6 +92,7 @@ class User extends Authenticatable
             $friend = new Friend;
             $friend->owner()->associate($this);
             $friend->user()->associate($user);
+            $friend->favorite = false;
             $this->friends()->save($friend);
             $this->load('friends');
             return true;

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Friend;
 
+use Log;
+
 class FriendsController extends Controller
 {
     public function list(User $owner)
@@ -35,7 +37,8 @@ class FriendsController extends Controller
             }
             $friend = Friend::create([
                     'owner_id' => $owner->id,
-                    'user_id' => User::findByUsername($request->username)->id
+                    'user_id' => User::findByUsername($request->username)->id,
+                    'favorite' => false
                 ]);
             return response()->success($friend->toArray());
         }
@@ -81,8 +84,6 @@ class FriendsController extends Controller
             $friend = Friend::where('owner_id', $owner->id)
                 ->where('user_id', User::findByUsername($request->username)->id)
                 ->first();
-            $friend->favorite = $request->favorite;
-            $friend->save();
             return response()->success($friend->toArray());
         }
         catch (Exception $e)

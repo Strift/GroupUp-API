@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Friend extends Model
 {
     protected $fillable = [
-        'owner_id', 'user_id'
+        'owner_id', 'user_id', 'favorite'
     ];
     protected $visible = [
         'username', 'status', 'favorite'
@@ -39,6 +39,9 @@ class Friend extends Model
 
     public function getFavoriteAttribute($favorite)
     {
-        return (bool) $favorite;
+        if ($favorite) {
+            return true;
+        }
+        return false;
     }
 }
