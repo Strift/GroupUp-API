@@ -85,7 +85,7 @@ class User extends Authenticatable
      * @param  \App\User  $user
      * @return boolean
      */
-    public function addFriend(User $user)
+    public function addFriend(User $user) // Unused
     {
         if (/*$this->id == $user->id or */$this->hasFriend($user) == false)
         {
@@ -100,7 +100,7 @@ class User extends Authenticatable
         return false;
     }
 
-    public function removeFriend(User $user)
+    public function removeFriend(User $user) // Unused
     {
         // Pretty sure this could be improved by checking the return value of detach
         if ($this->hasFriend($user)) 
