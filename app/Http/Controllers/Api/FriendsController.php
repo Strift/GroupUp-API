@@ -37,7 +37,7 @@ class FriendsController extends Controller
                     'owner_id' => $owner->id,
                     'user_id' => User::findByUsername($request->username)->id
                 ]);
-            return response()->success($friend);
+            return response()->success($friend->toArray());
         }
         catch (Exception $e)
         {
