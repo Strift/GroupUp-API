@@ -7,15 +7,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
+use App\Friend;
 
 class FriendsController extends Controller
 {
-    public function list(User $user)
+    public function list(User $owner)
     {
         try
         {
-        	$user = User::with('friends')->find($user->id);
-            return response()->success($user->friends->toArray());
+        	$friends = Friend::where('owner_id', $owner->id)->get();
+            return response()->success($friends->toArray());
         }
         catch (Exception $e)
         {
@@ -23,7 +24,7 @@ class FriendsController extends Controller
         }
     }
 
-    public function add(Request $request, User $user)
+    public function add(Request $request, User $owner)
     {
         try
         {
@@ -32,9 +33,11 @@ class FriendsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
-            $friend = User::findByUsername($request->username);
-            $user->addFriend($friend);
-            return response()->success($friend);
+            $friend = Friend::create([
+                    'owner_id' => $owner->id,
+                    'user_id' => User::findByUsername($request->username)->id
+                ]);
+            return response()->success($friend->toArray());
         }
         catch (Exception $e)
         {
@@ -42,7 +45,7 @@ class FriendsController extends Controller
         }
     }
 
-    public function remove(Request $request, User $user)
+    public function remove(Request $request, User $owner)
     {
         try
         {
@@ -51,9 +54,36 @@ class FriendsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
-            $friend = User::findByUsername($request->username);
-            $user->removeFriend($friend);
-            return response()->success($friend);
+            Friend::where('owner_id', $owner->id)
+                ->where('user_id', User::findByUsername($request->username)->id)
+                ->delete();
+            return response()->success("Friend successfully deleted.");
+        }
+        catch (Exception $e)
+        {
+            return response()->error($e->getMessage(), 500);
+        }
+    }
+
+    public function favorite(Request $request, User $owner)
+    {
+        try
+        {
+            $validator = Validator::make($request->only(['username', 'favorite']), 
+                [
+                    'username' => 'required|exists:users,username',
+                    'favorite' => 'required|boolean'
+                ]);
+            if ($validator->fails())
+            {
+                return response()->error($validator->messages(), 422);
+            }
+            $friend = Friend::where('owner_id', $owner->id)
+                ->where('user_id', User::findByUsername($request->username)->id)
+                ->first();
+            $friend->favorite = $request->favorite;
+            $friend->save();
+            return response()->success($friend->toArray());
         }
         catch (Exception $e)
         {

@@ -28,9 +28,10 @@ Route::group(['middleware' => 'cors'], function() {
 		Route::delete('/users/{user}', 'Api\UsersController@delete')->middleware('can:delete,user');
 
 		// Friends API
-		Route::get('/friends/{user}', 'Api\FriendsController@list')->middleware('can:listFriends,user');
-		Route::post('/friends/{user}', 'Api\FriendsController@add')->middleware('can:addFriend,user');
-		Route::delete('/friends/{user}', 'Api\FriendsController@remove')->middleware('can:removeFriend,user');
+		Route::get('/users/{owner}/friends', 'Api\FriendsController@list')->middleware('can:listFriends,owner');
+		Route::post('/users/{owner}/friends', 'Api\FriendsController@add')->middleware('can:addFriend,owner');
+		Route::delete('/users/{owner}/friends', 'Api\FriendsController@remove')->middleware('can:removeFriend,owner');
+		Route::put('/users/{owner}/friends', 'Api\FriendsController@favorite')->middleware('can:favorite,owner');
 
 	});
 
