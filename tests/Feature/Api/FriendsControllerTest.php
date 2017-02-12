@@ -26,7 +26,7 @@ class FriendAPITest extends TestCase
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $this->json('GET',
-                    'api/friends/' . $user1->id . '?api_token=' . $admin->api_token)
+                    'api/users/' . $user1->id . '/friends?api_token=' . $admin->api_token)
             ->assertJson([
                 'errors' => false,
                 'data' => [/* Unsupported in Laravel 5.4
@@ -42,7 +42,7 @@ class FriendAPITest extends TestCase
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
         $this->json('GET',
-                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token)
+                    'api/users/' . $user1->id . '/friends?api_token=' . $user1->api_token)
             ->assertJson([
                 'errors' => false,
                 'data' => [/* Unsupported in Laravel 5.4
@@ -57,7 +57,7 @@ class FriendAPITest extends TestCase
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
         $this->json('POST',
-                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+                    'api/users/' . $user1->id . '/friends?api_token=' . $user1->api_token,
                     ['username' => $user2->username])
             ->assertJson([
                 'errors' => false,
@@ -72,7 +72,7 @@ class FriendAPITest extends TestCase
     {
         $user1 = factory(User::class)->create([]);
         $this->json('POST',
-                    'api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+                    'api/users/' . $user1->id . '/friends?api_token=' . $user1->api_token,
                     ['username' => 'wrongusername'])
             ->assertJson([
                 'errors' => true,
@@ -86,7 +86,7 @@ class FriendAPITest extends TestCase
         $user1 = factory(User::class)->create([]);
         $user2 = factory(User::class)->create([]);
         $user1->addFriend($user2);
-        $this->delete('api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+        $this->delete('api/users/' . $user1->id . '/friends?api_token=' . $user1->api_token,
                     ['username' => $user2->username])
             ->assertJson([
                 'errors' => false,
@@ -100,7 +100,7 @@ class FriendAPITest extends TestCase
     public function testUserCannotRemoveWithWrongUsername()
     {
         $user1 = factory(User::class)->create([]);
-        $this->delete('api/friends/' . $user1->id . '?api_token=' . $user1->api_token,
+        $this->delete('api/users/' . $user1->id . '/friends?api_token=' . $user1->api_token,
                     ['username' => 'wrongusername'])
             ->assertJson([
                 'errors' => true,
