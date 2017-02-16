@@ -26,9 +26,10 @@ class SessionsController extends Controller
             {
                 return response()->error($validator->messages(), 422);
             }
+            Session::where('schedule_id', '=', $user->schedule->id)->delete();
     		$session = Session::create([
     			'schedule_id' => $user->schedule->id,
-    			'game_id' => Game::findByName($request->game),
+    			'game_id' => Game::findByName($request->game)->id,
     			'start_date' => Carbon::now(),
     			'duration' => $request->duration
     			]);
