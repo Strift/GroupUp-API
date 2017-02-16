@@ -39,8 +39,8 @@ class UsersSeederTest extends TestCase
 
     public function testDefaultUsersSeeded()
     {
-    	$this->assertDatabaseHas('users', ['username' => 'Strift', 'password' => 'secret']);
-    	$this->assertDatabaseHas('users', ['username' => 'MOPZ', 'password' => 'azerty']);
-    	$this->assertDatabaseHas('users', ['username' => 'quentin', 'password' => 'quentin']);
+    	$this->assertDatabaseHas('users', ['username' => 'Strift']);
+    	$this->assertDatabaseHas('users', ['username' => 'MOPZ']);
+    	$this->assertDatabaseHas('users', ['username' => 'quentin']);
     }
 }

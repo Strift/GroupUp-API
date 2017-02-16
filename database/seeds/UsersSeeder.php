@@ -32,17 +32,17 @@ class UsersSeeder extends Seeder
         // Default users
         DB::table('users')->insert([
         	'username' => 'Strift', 
-        	'password' => 'secret', 
+        	'password' => bcrypt('secret'), 
         	'email' => 'lau.cazanove@gmail.com', 
         	'api_token' => str_random(60)]);
         DB::table('users')->insert([
         	'username' => 'MOPZ', 
-        	'password' => 'azerty', 
+        	'password' => bcrypt('azerty'), 
         	'email' => 'paul.maupas@gmail.com', 
         	'api_token' => str_random(60)]);
         DB::table('users')->insert([
         	'username' => 'quentin', 
-        	'password' => 'quentin', 
+        	'password' => bcrypt('quentin'), 
         	'email' => 'fadakeke92@gmail.com', 
         	'api_token' => str_random(60)]);
     }
