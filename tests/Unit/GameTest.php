@@ -13,9 +13,16 @@ class GameTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testHasInterestedUsers()
+    public function testHasInterestedUsersRelationship()
     {
     	$game = factory(Game::class)->create([]);
         $this->assertNotNull($game->interestedUsers);
+    }
+
+    public function testFindByName()
+    {
+    	$createGame = factory(Game::class)->create(['name' => 'Overwatch']);
+    	$found = Game::findByName('Overwatch');
+    	$this->assertEquals($createGame->id, $found->id);
     }
 }
