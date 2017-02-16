@@ -9,15 +9,15 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\User;
 
-class AdminSeederTest extends TestCase
+class UsersSeederTest extends TestCase
 {
-    use DatabaseMigrations;
+	use DatabaseMigrations;
 
     public function setUp()
     {
         parent::setUp();
         $this->artisan('db:seed');
-    }
+    }   
 
     public function testAdministratorRoleSeeded()
     {
@@ -34,6 +34,13 @@ class AdminSeederTest extends TestCase
 
     public function testAdminUserHasAdminRole()
     {
-        $this->assertTrue(User::first()->hasRole('administrator'));
+        $this->assertTrue(User::findByEmail('admin@group-up.com')->hasRole('administrator'));
+    }
+
+    public function testDefaultUsersSeeded()
+    {
+    	$this->assertDatabaseHas('users', ['username' => 'Strift', 'password' => 'secret']);
+    	$this->assertDatabaseHas('users', ['username' => 'MOPZ', 'password' => 'azerty']);
+    	$this->assertDatabaseHas('users', ['username' => 'quentin', 'password' => 'quentin']);
     }
 }
