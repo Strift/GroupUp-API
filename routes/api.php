@@ -22,6 +22,9 @@ Route::group(['middleware' => 'cors'], function() {
 	// Routes requiring authentication
 	Route::group(['middleware' => 'auth:api'], function() {
 
+		// Games API
+		Route::get('/games', 'Api\GamesController@list')->middleware('can:list,App\Game');
+
 		// Users API
 		Route::get('/users', 'Api\UsersController@list')->middleware('can:list,App\User');
 		Route::get('/users/{user}', 'Api\UsersController@view')->middleware('can:view,user');
