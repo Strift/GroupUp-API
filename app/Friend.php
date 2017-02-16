@@ -34,6 +34,6 @@ class Friend extends Model
 
     public function getStatusAttribute()
     {
-    	return $this->user->status;
+    	return $this->user->schedule->sessions->first();
     }
 }

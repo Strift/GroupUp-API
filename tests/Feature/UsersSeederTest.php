@@ -43,4 +43,11 @@ class UsersSeederTest extends TestCase
     	$this->assertDatabaseHas('users', ['username' => 'MOPZ']);
     	$this->assertDatabaseHas('users', ['username' => 'quentin']);
     }
+
+    public function testDefaultUsersHaveSchedule()
+    {
+        $this->assertDatabaseHas('schedules', ['user_id' => User::findByUsername('Strift')->id]);
+        $this->assertDatabaseHas('schedules', ['user_id' => User::findByUsername('MOPZ')->id]);
+        $this->assertDatabaseHas('schedules', ['user_id' => User::findByUsername('quentin')->id]);
+    }
 }
