@@ -34,7 +34,8 @@ $factory->define(App\Game::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Session::class, function (Faker\Generator $faker) {
     return [
-        
+        'start_date' => $faker->dateTimeAD,
+        'duration' => $faker->numberBetween(1, 240)
     ];
 });
 
