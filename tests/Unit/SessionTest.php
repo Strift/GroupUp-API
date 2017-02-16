@@ -10,11 +10,12 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
 use App\Game;
 use App\Session;
+use Carbon\Carbon;
 
 class SessionTest extends TestCase
 {
     use DatabaseMigrations;
-
+    
     public function testHasGame()
     {
     	$user = factory(User::class)->create([]);

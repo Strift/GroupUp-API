@@ -115,4 +115,16 @@ class UserPolicy
     {
         return ($user->hasRole('administrator') or $user->id == $otherUser->id);
     }
+
+    /**
+     * Determine whether the user can add a session to a user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\User  $otherUser
+     * @return mixed
+     */
+    public function addSession(User $user, User $otherUser)
+    {
+        return ($user->hasRole('administrator') or $user->id == $otherUser->id);
+    }
 }

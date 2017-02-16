@@ -33,6 +33,9 @@ Route::group(['middleware' => 'cors'], function() {
 		Route::delete('/users/{owner}/friends', 'Api\FriendsController@remove')->middleware('can:removeFriend,owner');
 		Route::put('/users/{owner}/friends', 'Api\FriendsController@favorite')->middleware('can:favorite,owner');
 
+		// Sessions API
+		Route::post('/users/{user}/sessions', 'Api\SessionsController@create')->middleware('can:addSession,user');
+
 	});
 
 });
